@@ -1,0 +1,247 @@
+{
+  "catalog": [
+    {
+      "id": "2ce704a4-0796-442c-a2f1-572d93af5b9d",
+      "homeTeamName": "FC Bayern München",
+      "awayTeamName": "Bayer Leverkusen",
+      "date": 1503081000,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "a84abab2-1799-401d-8432-317997489839",
+      "homeTeamName": "SC Freiburg",
+      "awayTeamName": "Eintracht Frankfurt",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "2d1d7954-b06c-4761-98a3-ae84a013b065",
+      "homeTeamName": "Bor. Mönchengladbach",
+      "awayTeamName": "1. FC Köln",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "7c1c1c1a-1f18-426e-a0b7-751c8bb14e91",
+      "homeTeamName": "Hamburger SV",
+      "awayTeamName": "FC Augsburg",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "901199db-7cdc-45b8-8148-203eef609c56",
+      "homeTeamName": "Hertha BSC",
+      "awayTeamName": "VfB Stuttgart",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "8221f035-d55d-4a6f-be23-90a5f29a308e",
+      "homeTeamName": "TSG 1899 Hoffenheim",
+      "awayTeamName": "Werder Bremen",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "253dfa0f-acae-4038-9795-c262baba99ab",
+      "homeTeamName": "1. FSV Mainz 05",
+      "awayTeamName": "Hannover 96",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "aaaa0fc0-e43b-4fcf-9cdc-14cca47db265",
+      "homeTeamName": "FC Schalke 04",
+      "awayTeamName": "Red Bull Leipzig",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "6fcc1786-1a3f-4761-a035-702207e6c1e0",
+      "homeTeamName": "VfL Wolfsburg",
+      "awayTeamName": "Borussia Dortmund",
+      "date": 1503149400,
+      "matchday": 1,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "385764a1-d215-4444-bc3b-7409392f7eb7",
+      "homeTeamName": "FC Augsburg",
+      "awayTeamName": "Bor. Mönchengladbach",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "5e67de25-2ba3-4c8b-aa33-2258b962ceec",
+      "homeTeamName": "Bayer Leverkusen",
+      "awayTeamName": "TSG 1899 Hoffenheim",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "999615d6-ebbd-4c4d-967e-f67f6ac2ca2a",
+      "homeTeamName": "Borussia Dortmund",
+      "awayTeamName": "Hertha BSC",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "0a5e1a04-508c-4e18-9bf8-e5a0bb755dbf",
+      "homeTeamName": "Hannover 96",
+      "awayTeamName": "FC Schalke 04",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "ffc9a13e-68f9-49ad-92d6-2cef65834267",
+      "homeTeamName": "1. FC Köln",
+      "awayTeamName": "Hamburger SV",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "96195542-3ae1-43a4-bc06-51ffaf0fd386",
+      "homeTeamName": "Red Bull Leipzig",
+      "awayTeamName": "SC Freiburg",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "0e581058-4c31-433f-a2eb-cdd8fd041d62",
+      "homeTeamName": "VfB Stuttgart",
+      "awayTeamName": "1. FSV Mainz 05",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "cf9785b6-5b38-48a2-a237-922ed3b0287d",
+      "homeTeamName": "Werder Bremen",
+      "awayTeamName": "FC Bayern München",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "1641b4f4-b938-4d14-b2de-dd4a603659d6",
+      "homeTeamName": "Eintracht Frankfurt",
+      "awayTeamName": "VfL Wolfsburg",
+      "date": 1503667800,
+      "matchday": 2,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "ccfca319-f042-4da6-b4eb-781dfaa60945",
+      "homeTeamName": "FC Augsburg",
+      "awayTeamName": "1. FC Köln",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "21133fe7-cce3-4c5e-bfae-061e61a4f7fd",
+      "homeTeamName": "Bor. Mönchengladbach",
+      "awayTeamName": "Eintracht Frankfurt",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "1705eef3-bd9c-4485-97b2-c6e3ffae4d76",
+      "homeTeamName": "SC Freiburg",
+      "awayTeamName": "Borussia Dortmund",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "c174de06-dde7-4e9e-9a95-bbe9bedf8a14",
+      "homeTeamName": "Hamburger SV",
+      "awayTeamName": "Red Bull Leipzig",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "c8ae5473-271d-4a48-9d19-747674f63084",
+      "homeTeamName": "Hertha BSC",
+      "awayTeamName": "Werder Bremen",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "fcc9554f-969a-49f8-a4d5-a0bb18d23ca1",
+      "homeTeamName": "TSG 1899 Hoffenheim",
+      "awayTeamName": "FC Bayern München",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "d7852765-2ad6-412f-baea-86dc788f06ca",
+      "homeTeamName": "1. FSV Mainz 05",
+      "awayTeamName": "Bayer Leverkusen",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "11ccc771-37af-4773-92f3-598d90bd30fc",
+      "homeTeamName": "VfL Wolfsburg",
+      "awayTeamName": "Hannover 96",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    },
+    {
+      "id": "a9a9789f-b05c-400d-a0e9-a3b58ff78994",
+      "homeTeamName": "FC Schalke 04",
+      "awayTeamName": "VfB Stuttgart",
+      "date": 1504877400,
+      "matchday": 3,
+      "homeGoals": null,
+      "awayGoals": null
+    }
+  ]
+}
