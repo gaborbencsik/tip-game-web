@@ -1,5 +1,5 @@
 <template>
-  <div class="matchList container-fluid">
+  <div class="matchList">
     <h1>MatchList</h1>
     <main>
       <table class='table table-responsive'>
@@ -8,16 +8,26 @@
           <tr>
             <th>Home</th>
             <th>Away</th>
+            <th>Result</th>
+            <th>Halftime</th>
             <th>Date</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
+          <tr v-for="match in matches">
             <!-- each match in catalog -->
-            <td>Videoton FC</td>
-            <td>Ferencváros</td>
-            <td>1970.01.01</td>
+            <td>{{ match.homeTeamName }}</td>
+            <td>{{ match.awayTeamName }}</td>
+            <td>
+              <span>{{ match.homeGoals }} - </span>
+              <span>{{ match.awayGoals }}</span>
+            </td>
+            <td>
+              <span>({{ match.halfTimeHomeGoals }} - </span>
+              <span>{{ match.halfTimeAwayGoals }})</span>
+            </td>
+            <td>{{ match.date }}</td>
           </tr>
         </tbody>
 
@@ -30,8 +40,9 @@
 <script>
 export default {
   name: 'matchList',
-  data () {
-    return {
+  computed: {
+    matches () {
+      return this.$store.state.matches
     }
   }
 }

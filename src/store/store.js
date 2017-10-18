@@ -1,46 +1,69 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import ApiClient from '../services/apiClient'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   strict: true,
   state: {
-    matches: {
-      'catalog': [
-        {
-          'id': '2ce704a4-0796-442c-a2f1-572d93af5b9d',
-          'homeTeamName': 'FC Bayern München',
-          'awayTeamName': 'Bayer Leverkusen',
-          'date': 1503081000,
-          'matchday': 1,
-          'homeGoals': 4,
-          'awayGoals': 2
-        },
-        {
-          'id': 'a84abab2-1799-401d-8432-317997489839',
-          'homeTeamName': 'SC Freiburg',
-          'awayTeamName': 'Eintracht Frankfurt',
-          'date': 1503149400,
-          'matchday': 1,
-          'homeGoals': 2,
-          'awayGoals': 2
-        }
-      ]
-    },
-    list: () => {
-      return fetch('./catalog.json').then((response) => {
-        console.log(response)
-      })
-    }
+    // matches: [],
+    matches: [
+      {
+        'id': '162537',
+        'homeTeamName': 'FC Bayern München',
+        'awayTeamName': 'Bayer Leverkusen',
+        'date': 1503081000,
+        'matchday': 1,
+        'homeGoals': 3,
+        'awayGoals': 1,
+        'halfTimeHomeGoals': 2,
+        'halfTimeAwayGoals': 0,
+        'status': 'FINISHED'
+      },
+      {
+        'id': '162536',
+        'homeTeamName': 'VfL Wolfsburg',
+        'awayTeamName': 'Borussia Dortmund',
+        'date': 1503149400,
+        'matchday': 1,
+        'homeGoals': 0,
+        'awayGoals': 3,
+        'halfTimeHomeGoals': 0,
+        'halfTimeAwayGoals': 2,
+        'status': 'FINISHED'
+      }
+    ],
+    tips: [
+      {
+        'userId': '2',
+        'id': '162537',
+        'homeGoals': '4',
+        'awayGoals': '4',
+        'tipTimestamp': 1506441882776
+      },
+      {
+        'userId': '2',
+        'id': '162536',
+        'homeGoals': '3',
+        'awayGoals': '5',
+        'tipTimestamp': 1506441819019
+      }
+    ]
   },
   getters: {
 
   },
   mutations: {
-
+    setState: (state, matches) => {
+      state.products = matches
+    }
   },
   actions: {
-
+    getMatches: context => {
+      ApiClient.getMatches().then(() => {
+        context.commit('setState')
+      })
+    }
   }
 })

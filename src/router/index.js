@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import MatchList from '@/components/MatchList'
+import Tips from '@/components/Tips'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/match-list',
       name: 'MatchList',
       component: MatchList
+    },
+    {
+      path: '/tips',
+      name: 'Tips',
+      component: Tips
     }
   ]
 })

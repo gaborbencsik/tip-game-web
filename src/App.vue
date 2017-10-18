@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <header>
+    <header class="container">
       <nav>
         <router-link class="btn" to="/">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
+        <router-link class="btn" to="/tips">Tips</router-link>
       </nav>
     </header>
-    <router-view></router-view>
+    <router-view class="container"></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
+import {store} from './store/store'
 
+export default {
+  store: store,
+  name: 'app'
 }
 </script>
 
@@ -24,5 +27,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+header {
+  margin-bottom: 2rem;
 }
 </style>
