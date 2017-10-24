@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ApiClient from '../services/apiClient'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   strict: true,
   state: {
+    count: 0,
     // matches: [],
     matches: [
       {
@@ -57,13 +57,33 @@ export const store = new Vuex.Store({
   mutations: {
     setState: (state, matches) => {
       state.products = matches
+    },
+
+    increment: (state, count) => {
+      state.count += count
+    },
+
+    decrement: (state, count) => {
+      state.count -= count
+    },
+
+    set: (state, count) => {
+      state.count = count
     }
+
   },
   actions: {
     getMatches: context => {
-      ApiClient.getMatches().then(() => {
-        context.commit('setState')
-      })
+      // ApiC.getMatches().then((data) => {
+      //   context.commit('setState', data)
+      // })
+      // return fetch('http://localhost:4509/match-list', {
+      //   method: 'GET'
+      // }).then(response => {
+      //   console.log(response)
+      // }).catch(error => {
+      //   console.log(error)
+      // })
     }
   }
 })

@@ -1,22 +1,20 @@
 <template>
   <div id="app">
-    <header class="container">
-      <nav>
-        <router-link class="btn" to="/">Home</router-link>
-        <router-link class="btn" to="/match-list">Match List</router-link>
-        <router-link class="btn" to="/tips">Tips</router-link>
-      </nav>
-    </header>
+    <navbar>Loading...</navbar>
     <router-view class="container"></router-view>
   </div>
 </template>
 
 <script>
 import {store} from './store/store'
+import Navbar from './components/Navbar'
 
 export default {
   store: store,
-  name: 'app'
+  name: 'app',
+  components: {
+    'navbar': Navbar
+  }
 }
 </script>
 

@@ -31,10 +31,13 @@
             </td>
           </tr>
         </tbody>
-
       </table>
-
     </main>
+    <input type="number" name="" :value="getCount" ref="counter">
+    <button type="button" name="button" v-on:click="set">set</button>
+    <button type="button" name="button" v-on:click="increment">increment by one</button>
+    <button type="button" name="button" v-on:click="decrement">decrement by one</button>
+    <p>{{ getCount }}</p>
 
   </div>
 </template>
@@ -57,6 +60,21 @@ export default {
       })
       return matchData
       // let tipData = this.$store.state.tips
+    },
+    getCount () {
+      return this.$store.state.count
+    }
+  },
+  methods: {
+    increment: function () {
+      console.log('clicked')
+      this.$store.commit('increment', 1)
+    },
+    decrement: function () {
+      this.$store.commit('increment', -1)
+    },
+    set: function () {
+      this.$store.commit('set', parseInt(this.$refs.counter.value))
     }
   }
 }
