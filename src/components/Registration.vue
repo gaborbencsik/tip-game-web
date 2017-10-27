@@ -1,8 +1,7 @@
 <template>
-  <div class="login">
-    <!-- <div class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2"> -->
+  <div class="registration">
     <div class="">
-      <h2>Log In</h2>
+      <h2>Registration</h2>
 
       <div class="alert alert-danger" v-if="error">
         <p>{{ error }}</p>
@@ -17,38 +16,45 @@
       </div>
       <div class="form-group">
         <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your email"
+          v-model="credentials.email"
+        >
+      </div>
+      <div class="form-group">
+        <input
           type="password"
           class="form-control"
           placeholder="Enter your password"
           v-model="credentials.password"
         >
       </div>
-      <button class="btn btn-primary" @click="submit()">Login</button>
+      <button class="btn btn-primary" @click="submit()">Register</button>
       <h3>{{ credentials.username }}</h3>
       <h3>{{ credentials.password }}</h3>
     </div>
-    <router-link class="btn" to="/register">Not registered yet?</router-link>
   </div>
 </template>
 
 <script>
-// import ApiClient from '/Users/gbencsik/Practise/tip-game-web/src/services/ApiClient.js' // RELATIVE_URL?
 const ApiClient = require('../services/ApiClient.js')
 
 export default {
-  name: 'login',
+  name: 'registration',
   data () {
     return {
       credentials: {
         username: '',
-        password: ''
+        password: '',
+        email: ''
       },
       error: ''
     }
   },
   methods: {
     submit: function () {
-      ApiClient.register(this.credentials)
+      ApiClient.login(this.credentials)
       console.log(this.credentials.username)
     }
   }
@@ -57,6 +63,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 
 </style>

@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import MatchList from '@/components/MatchList'
 import Tips from '@/components/Tips'
 import Login from '@/components/Login'
+import Registration from '@/components/Registration'
 
 Vue.use(Router)
 
@@ -13,6 +14,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/registration',
+      name: 'Registration',
+      component: Registration
     },
     {
       path: '/home',

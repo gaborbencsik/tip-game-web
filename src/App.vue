@@ -3,12 +3,16 @@
     {{ user.authenticated }}
     <div v-if="user.authenticated">
       <navbar></navbar>
-      <router-view class="container"></router-view>
     </div>
-    <div v-else>
-      <home></home>
-      <login></login>
+    <div v-else class="row container-fluid">
+      <div class="col-md-6 col-xs-8 col-xs-offset-2">
+        <login></login>
+      </div>
+      <div class="col-md-6 col-xs-8 col-xs-offset-2">
+        <registration></registration>
+      </div>
     </div>
+    <router-view class="container"></router-view>
   </div>
 </template>
 
@@ -17,6 +21,7 @@ import {store} from './store/store'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
 import Home from './components/Home'
+import Registration from './components/Registration'
 
 export default {
   store: store,
@@ -24,7 +29,8 @@ export default {
   components: {
     'navbar': Navbar,
     'login': Login,
-    'home': Home
+    'home': Home,
+    'registration': Registration
   },
   computed: {
     user () {
