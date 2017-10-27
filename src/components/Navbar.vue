@@ -2,6 +2,7 @@
   <div class="navbar">
     <header class="container">
       <nav>
+        <router-link class="btn" to="/login">Login</router-link>
         <router-link class="btn" to="/home">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
         <router-link class="btn" to="/tips">Tips</router-link>

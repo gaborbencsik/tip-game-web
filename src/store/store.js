@@ -7,7 +7,9 @@ export const store = new Vuex.Store({
   strict: true,
   state: {
     count: 0,
-    // matches: [],
+    user: {
+      authenticated: false
+    },
     matches: [
       {
         'id': '162537',
@@ -56,7 +58,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setState: (state, matches) => {
-      state.products = matches
+      state.matches = matches
     },
 
     increment: (state, count) => {
@@ -70,20 +72,35 @@ export const store = new Vuex.Store({
     set: (state, count) => {
       state.count = count
     }
-
   },
   actions: {
-    getMatches: context => {
-      // ApiC.getMatches().then((data) => {
-      //   context.commit('setState', data)
-      // })
-      // return fetch('http://localhost:4509/match-list', {
-      //   method: 'GET'
-      // }).then(response => {
-      //   console.log(response)
-      // }).catch(error => {
-      //   console.log(error)
-      // })
+    getMatches ({commit}) {
+      console.log('1')
+      // let mactList = () => {
+      //   return fetch('http://localhost:4509/match-list', {
+      //     method: 'GET'
+      //   }).then(response => {
+      //     console.log(response)
+      //   }).catch(error => {
+      //     console.log(error)
+      //   })
+      // }
+      let list = [{
+        'id': '162537',
+        'homeTeamName': 'HAZAI',
+        'awayTeamName': 'VENDÉG',
+        'date': 1503081000,
+        'matchday': 1,
+        'homeGoals': 5,
+        'awayGoals': 5,
+        'halfTimeHomeGoals': 5,
+        'halfTimeAwayGoals': 0,
+        'status': 'FINISHED'
+      }]
+      setTimeout(() => {
+        commit('setState', list)
+        console.log('2')
+      }, 500)
     }
   }
 })

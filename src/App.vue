@@ -1,19 +1,35 @@
 <template>
   <div id="app">
-    <navbar>Loading...</navbar>
-    <router-view class="container"></router-view>
+    {{ user.authenticated }}
+    <div v-if="user.authenticated">
+      <navbar></navbar>
+      <router-view class="container"></router-view>
+    </div>
+    <div v-else>
+      <home></home>
+      <login></login>
+    </div>
   </div>
 </template>
 
 <script>
 import {store} from './store/store'
 import Navbar from './components/Navbar'
+import Login from './components/Login'
+import Home from './components/Home'
 
 export default {
   store: store,
   name: 'app',
   components: {
-    'navbar': Navbar
+    'navbar': Navbar,
+    'login': Login,
+    'home': Home
+  },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
   }
 }
 </script>
