@@ -1,5 +1,7 @@
 # tip-game-web
 
+codeship
+
 > A Vue.js project
 
 ## Build Setup
