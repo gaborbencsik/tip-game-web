@@ -5,15 +5,20 @@
         <router-link class="btn" to="/home">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
         <router-link class="btn" to="/tips">Tips</router-link>
-        <button class="btn" @click="logout()">Logout</button>
+        <logout></logout>
       </nav>
     </header>
   </div>
 </template>
 
 <script>
+import Logout from './Logout'
+
 export default {
   name: 'navbar',
+  components: {
+    'logout': Logout
+  },
   data () {
     return {
     }

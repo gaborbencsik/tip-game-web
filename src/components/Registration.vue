@@ -32,6 +32,7 @@
       </div>
       <button class="btn btn-primary" @click="submit()">Register</button>
     </div>
+    <router-link class="btn" to="/login">Login</router-link>
   </div>
 </template>
 

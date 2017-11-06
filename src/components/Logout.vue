@@ -1,0 +1,31 @@
+<template>
+  <div class="logout">
+    <button class="btn btn-danger" type="button" name="button" @click="logout()">Logout</button>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'logout',
+  data () {
+    return {
+    }
+  },
+  methods: {
+    logout: function () {
+      localStorage.removeItem('token')
+      localStorage.setItem('authenticated', false)
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+.logout {
+    display: inline-block;
+}
+
+</style>
