@@ -5,15 +5,13 @@
       <navbar></navbar>
     </div>
     <div v-else class="row container-fluid">
+      <div class="col-md-6 col-xs-8 col-xs-offset-2">
       <div v-if="true">
-        <div class="col-md-6 col-xs-8 col-xs-offset-2">
-          <login></login>
-        </div>
+        <login></login>
       </div>
       <div v-else>
-        <div class="col-md-6 col-xs-8 col-xs-offset-2">
-          <registration></registration>
-        </div>
+        <registration></registration>
+      </div>
       </div>
     </div>
     <router-view class="container"></router-view>
