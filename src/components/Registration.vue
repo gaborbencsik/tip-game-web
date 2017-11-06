@@ -31,14 +31,14 @@
         >
       </div>
       <button class="btn btn-primary" @click="submit()">Register</button>
-      <h3>{{ credentials.username }}</h3>
-      <h3>{{ credentials.password }}</h3>
     </div>
   </div>
 </template>
 
 <script>
-const ApiClient = require('../services/ApiClient.js')
+import axios from 'axios'
+// const ApiClient = require('../services/ApiClient.js')
+// import { register } from '../services/ApiClient.js'
 
 export default {
   name: 'registration',
@@ -54,8 +54,22 @@ export default {
   },
   methods: {
     submit: function () {
-      ApiClient.login(this.credentials)
-      console.log(this.credentials.username)
+      // register(this.credentials)
+      console.log(this.credentials)
+      axios.post(`http://localhost:4509/registration`, {
+        username: this.credentials.username,
+        password: this.credentials.password,
+        email: this.credentials.email
+      })
+      .then(response => {
+        if (response.data.error) {
+          this.credentials = {}
+          this.error = response.data.error
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
@@ -63,5 +77,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.alert {
+  transition: opacity .5s
+}
 
 </style>

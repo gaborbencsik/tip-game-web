@@ -36,6 +36,11 @@ export default {
     user () {
       return this.$store.state.user
     }
+  },
+  beforeCreate: function () {
+    let token = localStorage.getItem('token')
+    let authenticated = token
+    this.$store.commit('authenticateUser', {token: token, authenticated: authenticated})
   }
 }
 </script>

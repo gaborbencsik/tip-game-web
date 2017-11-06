@@ -24,16 +24,15 @@
         >
       </div>
       <button class="btn btn-primary" @click="submit()">Login</button>
-      <h3>{{ credentials.username }}</h3>
-      <h3>{{ credentials.password }}</h3>
     </div>
     <router-link class="btn" to="/register">Not registered yet?</router-link>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 // import ApiClient from '/Users/gbencsik/Practise/tip-game-web/src/services/ApiClient.js' // RELATIVE_URL?
-const ApiClient = require('../services/ApiClient.js')
+// const ApiClient = require('../services/ApiClient.js')
 
 export default {
   name: 'login',
@@ -48,8 +47,28 @@ export default {
   },
   methods: {
     submit: function () {
-      ApiClient.register(this.credentials)
-      console.log(this.credentials.username)
+      // ApiClient.register(this.credentials)
+      axios.post(`http://localhost:4509/login`, {
+        username: this.credentials.username,
+        password: this.credentials.password
+      })
+      .then(response => {
+        console.log(response)
+        if (!response.data.success) {
+          this.error = response.data.message
+        } else {
+          this.authenticateUser()
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('id', response.data.id)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    authenticateUser: function () {
+      let user = {token: 'hello', authenticated: true}
+      this.$store.commit('authenticateUser', user)
     }
   }
 }

@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
   state: {
     count: 0,
     user: {
+      token: '',
       authenticated: false
     },
     matches: [
@@ -71,7 +72,13 @@ export const store = new Vuex.Store({
 
     set: (state, count) => {
       state.count = count
+    },
+
+    authenticateUser: (state, user) => {
+      state.user.authenticated = user.authenticated
+      state.user.token = user.token
     }
+
   },
   actions: {
     getMatches ({commit}) {

@@ -8,7 +8,7 @@ import Registration from '@/components/Registration'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/login',
@@ -37,3 +37,5 @@ export default new Router({
     }
   ]
 })
+
+export default router
