@@ -9,6 +9,7 @@ import Registration from '@/components/Registration'
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/login',
