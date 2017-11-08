@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "8e7bd4da-670e-4738-adec-5a05e2e56570",
+      "username": "gabor",
+      "email": "gabor.bencsik13@gmail.com",
+      "admin": false,
+      "registration": 1508999897399,
+      "last_seen": 1508999897399
+    },
+    {
+      "id": "6fdc768c-0610-49f8-ac00-55a79d8818db",
+      "username": "panna",
+      "email": "drbencsikanna@gmail.com",
+      "admin": false,
+      "registration": 1509086950585,
+      "last_seen": 1509086950585
+    }
+  ]
+}

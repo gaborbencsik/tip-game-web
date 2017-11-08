@@ -1,13 +1,20 @@
 
-// server.js
-var express = require('express');
-var path = require('path');
-var serveStatic = require('serve-static');
-app = express();
+const express = require('express');
+const path = require('path');
+const serveStatic = require('serve-static');
+const bodyParser = require('body-parser');
+const app = express();
+
+const Router = require('./api/router.js');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(serveStatic(__dirname + "/dist"));
 
-var port = process.env.PORT || 5000;
+let router = new Router(app);
+router.setupRoutes();
 
-app.listen(port);
-console.log('server started '+ port);
+const server = app.listen(process.env.PORT || 4509, function() {
+  console.log(`Server is running on ${server.address().port}`);
+});
