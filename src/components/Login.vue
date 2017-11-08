@@ -49,7 +49,7 @@ export default {
   methods: {
     submit: function () {
       // ApiClient.register(this.credentials)
-      axios.post(`http://localhost:4509/login`, {
+      axios.post(`${process.env.BASE_URL}/login`, {
         username: this.credentials.username,
         password: this.credentials.password
       })
@@ -78,7 +78,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-h3 {
+h3 .btn {
   cursor: pointer;
 }
 
