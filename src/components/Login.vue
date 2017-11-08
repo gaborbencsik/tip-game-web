@@ -49,7 +49,9 @@ export default {
   methods: {
     submit: function () {
       // ApiClient.register(this.credentials)
-      axios.post(`${process.env.BASE_URL}/login`, {
+      let loginUrl = `${process.env.BASE_URL}/login`
+      console.log(loginUrl)
+      axios.post(loginUrl, {
         username: this.credentials.username,
         password: this.credentials.password
       })
