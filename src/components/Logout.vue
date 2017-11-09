@@ -16,6 +16,8 @@ export default {
     logout: function () {
       localStorage.removeItem('token')
       localStorage.setItem('authenticated', false)
+      let user = {token: null, authenticated: false}
+      this.$store.commit('authenticateUser', user)
     }
   }
 }

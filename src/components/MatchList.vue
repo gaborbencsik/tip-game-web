@@ -1,5 +1,5 @@
 <template>
-  <div class="matchList">
+  <div v-if="authenticated" class="matchList">
     <h1>MatchList</h1>
     <main>
       <table class='table table-responsive'>
@@ -43,8 +43,17 @@ export default {
   computed: {
     matches () {
       return this.$store.state.matches
+    },
+    authenticated () {
+      return this.$store.state.user.authenticated
     }
+  },
+  created: function () {
+    console.log(this.$store.state.user.authenticated)
   }
+  // beforeMount: function () {
+  //   console.log(this.$store.state.user)
+  // }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="matchList container-fluid">
+  <div v-if="authenticated" class="matchList container-fluid">
     <h1>My Tips</h1>
     <main>
       <table class='table table-responsive'>
@@ -48,6 +48,9 @@ export default {
   computed: {
     matches () {
       return this.$store.state.matches
+    },
+    authenticated () {
+      return this.$store.state.user.authenticated
     },
     tips () {
       let matchData = this.$store.state.matches.map(match => {

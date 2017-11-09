@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div v-if="authenticated" class="home">
 
   </div>
 </template>
@@ -9,6 +9,11 @@ export default {
   name: 'home',
   data () {
     return {
+    }
+  },
+  computed: {
+    authenticated () {
+      return this.$store.state.user.authenticated
     }
   }
 }
