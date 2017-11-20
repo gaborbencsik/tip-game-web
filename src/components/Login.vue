@@ -25,7 +25,7 @@
       </div>
       <button class="btn btn-primary" @click="submit()">Login</button>
     </div>
-    <h3 class="btn btn-link">Not registered yet?</h3>
+    <h3 class="btn btn-link" @click="goToRegister()">Not registered yet?</h3>
     <!-- <router-link class="btn" to="/register">Not registered yet?</router-link> -->
   </div>
 </template>
@@ -67,6 +67,9 @@ export default {
         console.log(error)
       })
     },
+    goToRegister: function () {
+      console.log('go to reg')
+    },
     authenticateUser: function () {
       let user = {token: 'hello', authenticated: true}
       this.$store.commit('authenticateUser', user)
@@ -78,7 +81,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-h3 .btn {
+h3 {
   cursor: pointer;
 }
 

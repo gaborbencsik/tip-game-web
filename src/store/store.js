@@ -78,7 +78,6 @@ export const store = new Vuex.Store({
       state.user.authenticated = user.authenticated
       state.user.token = user.token
     }
-
   },
   actions: {
     getMatches ({commit}) {

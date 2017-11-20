@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     {{ user.authenticated }}
+    {{ showLogin }}
     <div v-if="user.authenticated">
       <navbar></navbar>
     </div>
@@ -33,6 +34,11 @@ export default {
     'login': Login,
     'home': Home,
     'registration': Registration
+  },
+  data () {
+    return {
+      showLogin: true
+    }
   },
   computed: {
     user () {
