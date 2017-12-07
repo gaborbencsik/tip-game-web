@@ -5,7 +5,7 @@ const passwords_db = wee_db('passwords.json');
 const uuid = require('uuid/v1');
 const ID_NAMESPACE = 'tips';
 
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
 class DB {
@@ -32,16 +32,16 @@ class DB {
   static savePasswordFor(userId, plainTextPassword) {
     return new Promise(
       function(resolve, reject) {
-        bcrypt.hash(plainTextPassword, SALT_ROUNDS, function(err, hash) {
-          console.log(hash);
-          if(err) {
-            console.log(err);
-          }
-          passwords_db.insert('passwords', {
-            id: userId,
-            password: hash}
-          );
-        });
+        // bcrypt.hash(plainTextPassword, SALT_ROUNDS, function(err, hash) {
+        //   console.log(hash);
+        //   if(err) {
+        //     console.log(err);
+        //   }
+        //   passwords_db.insert('passwords', {
+        //     id: userId,
+        //     password: hash}
+        //   );
+        // });
         resolve();
       }
     )

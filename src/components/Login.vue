@@ -12,7 +12,7 @@
           type="text"
           class="form-control"
           placeholder="Enter your username"
-          v-model="credentials.username"
+          v-model="credentials.name"
         >
       </div>
       <div class="form-group">
@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       credentials: {
-        username: '',
+        name: '',
         password: ''
       },
       error: ''
@@ -50,7 +50,7 @@ export default {
     submit: function () {
       // ApiClient.register(this.credentials)
       axios.post('/login', {
-        username: this.credentials.username,
+        name: this.credentials.name,
         password: this.credentials.password
       })
       .then(response => {
@@ -68,7 +68,7 @@ export default {
       })
     },
     goToRegister: function () {
-      console.log('go to reg')
+      console.log('go to reg') // TODO: props
     },
     authenticateUser: function () {
       let user = {token: 'hello', authenticated: true}

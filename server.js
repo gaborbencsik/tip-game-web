@@ -1,9 +1,21 @@
-
 const express = require('express');
 const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const uri = process.env.MONGO_URL;
+
 const app = express();
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(uri, {
+  useMongoClient: true
+}).then(function(data) {
+}).catch(function(error) {
+  console.log(error);
+});
 
 const Router = require('./api/router.js');
 

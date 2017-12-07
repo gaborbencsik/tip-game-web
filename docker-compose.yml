@@ -1,0 +1,21 @@
+version: "2"
+services:
+  app:
+    build: .
+    container_name: tip-game-web
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/tip-game
+      - PORT=4509
+    restart: always
+    ports:
+      - "4509:4509"
+    volumes:
+      - .:/app
+    command: npm run alldev
+  mongo:
+    container_name: tip-game-mongo
+    image: mongo:3.5.13-jessie
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
