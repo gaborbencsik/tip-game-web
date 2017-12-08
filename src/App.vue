@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     {{ user.authenticated }}
-    {{ showLogin }}
     <div v-if="user.authenticated">
       <navbar></navbar>
     </div>
     <div v-else class="row container-fluid">
       <div class="col-md-6 col-xs-8 col-xs-offset-2">
-      <div v-if="true">
+      <div v-if="showLoginState">
         <login></login>
       </div>
       <div v-else>
-        <registration></registration>
+        <registration @showReg="this.showLogin"></registration>
       </div>
       </div>
     </div>
@@ -35,14 +34,13 @@ export default {
     'home': Home,
     'registration': Registration
   },
-  data () {
-    return {
-      showLogin: true
-    }
-  },
   computed: {
     user () {
       return this.$store.state.user
+    },
+    showLoginState () {
+      console.log(this.$store.state.showLogin)
+      return this.$store.state.showLogin
     }
   },
   beforeCreate: function () {

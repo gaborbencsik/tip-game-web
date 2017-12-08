@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
       token: '',
       authenticated: false
     },
+    showLogin: true,
     matches: [
       {
         'id': '162537',
@@ -77,6 +78,9 @@ export const store = new Vuex.Store({
     authenticateUser: (state, user) => {
       state.user.authenticated = user.authenticated
       state.user.token = user.token
+    },
+    toggleLoginState: (state, showLogin) => {
+      state.showLogin = showLogin
     }
   },
   actions: {

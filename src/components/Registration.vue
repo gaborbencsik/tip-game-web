@@ -32,7 +32,7 @@
       </div>
       <button class="btn btn-primary" @click="submit()">Register</button>
     </div>
-    <router-link class="btn" to="/login">Login</router-link>
+    <h3 class="btn btn-link" @click="goToLogin()">Login</h3>
   </div>
 </template>
 
@@ -50,7 +50,8 @@ export default {
         password: '',
         email: ''
       },
-      error: ''
+      error: '',
+      showLogin: false
     }
   },
   methods: {
@@ -71,6 +72,10 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    },
+    goToLogin: function () {
+      this.showLogin = !this.showLogin
+      this.$store.commit('toggleLoginState', this.showLogin)
     }
   }
 }

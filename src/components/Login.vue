@@ -43,7 +43,8 @@ export default {
         name: '',
         password: ''
       },
-      error: ''
+      error: '',
+      showLogin: true
     }
   },
   methods: {
@@ -68,7 +69,8 @@ export default {
       })
     },
     goToRegister: function () {
-      console.log('go to reg') // TODO: props
+      this.showLogin = !this.showLogin
+      this.$store.commit('toggleLoginState', this.showLogin)
     },
     authenticateUser: function () {
       let user = {token: 'hello', authenticated: true}
