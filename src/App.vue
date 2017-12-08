@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{ user.authenticated }}
     <div v-if="user.authenticated">
       <navbar></navbar>
     </div>
@@ -39,7 +38,6 @@ export default {
       return this.$store.state.user
     },
     showLoginState () {
-      console.log(this.$store.state.showLogin)
       return this.$store.state.showLogin
     }
   },

@@ -38,8 +38,6 @@
 
 <script>
 import axios from 'axios'
-// const ApiClient = require('../services/ApiClient.js')
-// import { register } from '../services/ApiClient.js'
 
 export default {
   name: 'registration',
@@ -56,7 +54,6 @@ export default {
   },
   methods: {
     submit: function () {
-      // register(this.credentials)
       console.log(this.credentials)
       axios.post(`http://localhost:4509/registration`, {
         username: this.credentials.username,

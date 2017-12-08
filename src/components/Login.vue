@@ -32,8 +32,6 @@
 
 <script>
 import axios from 'axios'
-// import ApiClient from '/Users/gbencsik/Practise/tip-game-web/src/services/ApiClient.js' // RELATIVE_URL?
-// const ApiClient = require('../services/ApiClient.js')
 
 export default {
   name: 'login',
@@ -49,7 +47,6 @@ export default {
   },
   methods: {
     submit: function () {
-      // ApiClient.register(this.credentials)
       axios.post('/login', {
         name: this.credentials.name,
         password: this.credentials.password
