@@ -40,13 +40,13 @@ class AuthController {
     User.findOne({name: req.body.name}).then(function(user, next) {
       if (user == null) {
         User.create(regData).then(function(newUser) {
-          res.status(200).send({success: true, data: newUser})
+          res.status(200).send({success: true, id: newUser._id})
         }).catch(function(error) {
           console.log(error);
-          res.status(409).send({success: false, message: 'Email address is already in use. Please choose an other one'});
+          res.status(200).send({success: false, message: 'Email address is already in use. Please choose an other one'});
         });
       } else {
-        res.status(403).send({success: false, message: 'Username already exists. Please choose an other one'});
+        res.status(200).send({success: false, message: 'Username already exists. Please choose an other one'});
       }
     }).catch(function(error) {
       console.log(error);

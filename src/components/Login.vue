@@ -56,7 +56,7 @@ export default {
         if (!response.data.success) {
           this.error = response.data.message
         } else {
-          this.authenticateUser()
+          this.authenticateUser(response.data.token)
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('id', response.data.id)
         }
@@ -69,8 +69,8 @@ export default {
       this.showLogin = !this.showLogin
       this.$store.commit('toggleLoginState', this.showLogin)
     },
-    authenticateUser: function () {
-      let user = {token: 'hello', authenticated: true}
+    authenticateUser: function (token) {
+      let user = {token: token, authenticated: true}
       this.$store.commit('authenticateUser', user)
     }
   }

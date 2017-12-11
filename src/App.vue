@@ -9,7 +9,7 @@
         <login></login>
       </div>
       <div v-else>
-        <registration @showReg="this.showLogin"></registration>
+        <registration></registration>
       </div>
       </div>
     </div>
@@ -39,6 +39,9 @@ export default {
     },
     showLoginState () {
       return this.$store.state.showLogin
+    },
+    getToken () {
+      return this.$store.state.user.token
     }
   },
   beforeCreate: function () {

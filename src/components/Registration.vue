@@ -6,12 +6,16 @@
       <div class="alert alert-danger" v-if="error">
         <p>{{ error }}</p>
       </div>
+      <div class="alert alert-success" v-if="success">
+        <p>Your registration was successful.</p>
+        <a class="alert-link login-text" @click="changeLoginState()">Login here!</a>
+      </div>
       <div class="form-group">
         <input
           type="text"
           class="form-control"
           placeholder="Enter your username"
-          v-model="credentials.username"
+          v-model="credentials.name"
         >
       </div>
       <div class="form-group">
@@ -32,7 +36,7 @@
       </div>
       <button class="btn btn-primary" @click="submit()">Register</button>
     </div>
-    <h3 class="btn btn-link" @click="goToLogin()">Login</h3>
+    <h3 class="btn btn-link" @click="changeLoginState()">Login</h3>
   </div>
 </template>
 
@@ -44,33 +48,35 @@ export default {
   data () {
     return {
       credentials: {
-        username: '',
+        name: '',
         password: '',
         email: ''
       },
       error: '',
-      showLogin: false
+      showLogin: false,
+      success: false
     }
   },
   methods: {
     submit: function () {
       console.log(this.credentials)
-      axios.post(`http://localhost:4509/registration`, {
-        username: this.credentials.username,
+      axios.post('/registration', {
+        name: this.credentials.name,
         password: this.credentials.password,
         email: this.credentials.email
       })
       .then(response => {
-        if (response.data.error) {
-          this.credentials = {}
-          this.error = response.data.error
+        if (!response.data.success) {
+          this.error = response.data.message
+        } else {
+          this.success = true
         }
       })
       .catch(error => {
         console.log(error)
       })
     },
-    goToLogin: function () {
+    changeLoginState: function () {
       this.showLogin = !this.showLogin
       this.$store.commit('toggleLoginState', this.showLogin)
     }
@@ -83,6 +89,11 @@ export default {
 
 .alert {
   transition: opacity .5s
+}
+
+.login-text {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 </style>
