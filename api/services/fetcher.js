@@ -1,42 +1,23 @@
-const wee_db = require('wee-db');
-const catalog_db = wee_db('catalog.json');
-const catalog_api_db = wee_db('catalog_api.json');
 const fetch = require('node-fetch');
+const mongoose = require('mongoose');
+const uri = process.env.MONGO_URL;
 
-const dummy = require('./../dummy.json');
+const Match = require('../models/match.js');
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(uri, {
+  useMongoClient: true
+}).then(function(data) {
+}).catch(function(error) {
+  console.log(error);
+});
+
 const url = 'http://api.football-data.org/v1/competitions/452/fixtures';
-
-let obj = dummy.match_list;
 
 class MatchFetcher {
 
-  parseDummy(obj, db) {
-    obj.forEach((item) => {
-
-      let halfTimeHomeGoals = null;
-      let halfTimeAwayGoals = null;
-
-      if (!item.result.halfTime == undefined) {
-        halfTimeHomeGoals = item.result.halfTime.goalsHomeTeam;
-        halfTimeAwayGoals = item.result.halfTime.goalsAwayTeam;
-      }
-
-      db.insert('catalog', {
-        eventId: "",
-        homeTeamName: item.homeTeamName,
-        awayTeamName: item.awayTeamName,
-        date: new Date(item.date).getTime(),
-        matchday: item.matchday,
-        homeGoals: item.result.goalsHomeTeam,
-        awayGoals: item.result.goalsAwayTeam,
-        halfTimeHomeGoals: halfTimeHomeGoals,
-        halfTimeAwayGoals: halfTimeAwayGoals,
-        status: item.status
-      })
-    });
-  }
-
-  parseApi(obj, db) {
+  parseApi(obj) {
     let object = obj.fixtures;
 
     object.forEach((item) => {
@@ -49,9 +30,10 @@ class MatchFetcher {
       if (item.result.halfTime != undefined) {
         halfTimeHomeGoals1 = item.result.halfTime.goalsHomeTeam;
         halfTimeAwayGoals1 = item.result.halfTime.goalsAwayTeam;
-      }
+      };
 
-      db.upsert('catalog', { id: id }, {
+      let matchItem = {
+        matchId: id,
         homeTeamName: item.homeTeamName,
         awayTeamName: item.awayTeamName,
         date: new Date(item.date).getTime(),
@@ -61,7 +43,25 @@ class MatchFetcher {
         halfTimeHomeGoals: halfTimeHomeGoals1,
         halfTimeAwayGoals: halfTimeAwayGoals1,
         status: item.status
-      })
+      };
+
+      Match.findOne({matchId: id}).then(function(prevMatch) {
+        if (prevMatch == null) {
+          Match.create(matchItem).then(function(newMatch) {
+            console.log('new match item created: ',newMatch);
+          }).catch(function(error) {
+            console.log('match item creation was not successful: ',error);
+          });
+        } else {
+          Match.update({matchId:prevMatch.matchId}, matchItem).then(function(newItem) {
+            console.log('updated existing match item: ',newItem);
+          }).catch(function(error) {
+            console.log('updating match item was not successful: ',error);
+          });
+        }
+      }).catch(function(error) {
+        console.log('error: ',error);
+      });
     });
   }
 }
@@ -82,5 +82,5 @@ let ApiClient = {
 
 const manager = new MatchFetcher;
 ApiClient.fetchData(url)
-  .then((data) => { manager.parseApi(data, catalog_api_db) })
+  .then((data) => { manager.parseApi(data) })
   .catch(error => { console.log(error); });
