@@ -12,32 +12,7 @@ export const store = new Vuex.Store({
       authenticated: false
     },
     showLogin: true,
-    matches: [
-      {
-        'id': '162537',
-        'homeTeamName': 'FC Bayern München',
-        'awayTeamName': 'Bayer Leverkusen',
-        'date': 1503081000,
-        'matchday': 1,
-        'homeGoals': 3,
-        'awayGoals': 1,
-        'halfTimeHomeGoals': 2,
-        'halfTimeAwayGoals': 0,
-        'status': 'FINISHED'
-      },
-      {
-        'id': '162536',
-        'homeTeamName': 'VfL Wolfsburg',
-        'awayTeamName': 'Borussia Dortmund',
-        'date': 1503149400,
-        'matchday': 1,
-        'homeGoals': 0,
-        'awayGoals': 3,
-        'halfTimeHomeGoals': 0,
-        'halfTimeAwayGoals': 2,
-        'status': 'FINISHED'
-      }
-    ],
+    matches: [],
     tips: [
       {
         'userId': '2',
@@ -60,6 +35,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setState: (state, matches) => {
+      console.log(matches)
       state.matches = matches
     },
 
@@ -84,33 +60,18 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    getMatches ({commit}) {
-      console.log('1')
-      // let mactList = () => {
-      //   return fetch('http://localhost:4509/match-list', {
-      //     method: 'GET'
-      //   }).then(response => {
-      //     console.log(response)
-      //   }).catch(error => {
-      //     console.log(error)
-      //   })
-      // }
-      let list = [{
-        'id': '162537',
-        'homeTeamName': 'HAZAI',
-        'awayTeamName': 'VENDÉG',
-        'date': 1503081000,
-        'matchday': 1,
-        'homeGoals': 5,
-        'awayGoals': 5,
-        'halfTimeHomeGoals': 5,
-        'halfTimeAwayGoals': 0,
-        'status': 'FINISHED'
-      }]
-      setTimeout(() => {
-        commit('setState', list)
-        console.log('2')
-      }, 500)
+    getMatches (context) {
+      fetch('/matches', {
+        method: 'GET'
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        context.commit('setState', data)
+      }).catch(error => {
+        console.log(error)
+      })
+      // console.log(matchList)
+      // context.commit('setState', matchList)
     }
   }
 })

@@ -15,7 +15,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="match in matches">
+          <tr v-for="match in orderedMatches">
             <!-- each match in catalog -->
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
@@ -27,7 +27,7 @@
               <span>({{ match.halfTimeHomeGoals }} - </span>
               <span>{{ match.halfTimeAwayGoals }})</span>
             </td>
-            <td>{{ match.date }}</td>
+            <td>{{ match.date | changeDate }}</td>
           </tr>
         </tbody>
 
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import moment from 'moment'
 export default {
   name: 'matchList',
   computed: {
@@ -46,14 +48,19 @@ export default {
     },
     authenticated () {
       return this.$store.state.user.authenticated
+    },
+    orderedMatches () {
+      return _.orderBy(this.matches, 'date')
+    }
+  },
+  filters: {
+    changeDate: function (value) {
+      return moment(value).format('YYYY.MM.DD, dddd, HH:mm')
     }
   },
   created: function () {
-    console.log(this.$store.state.user.authenticated)
+    this.$store.dispatch('getMatches')
   }
-  // beforeMount: function () {
-  //   console.log(this.$store.state.user)
-  // }
 }
 </script>
 

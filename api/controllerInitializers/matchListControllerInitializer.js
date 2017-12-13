@@ -15,7 +15,7 @@ class MatchListControllerInitializer{
   }
 
   setupRoute() {
-    this.app.get('/matches/all', this.app.matchListController.getAll)
+    this.app.get('/matches', this.app.matchListController.getAll)
   }
 }
 
