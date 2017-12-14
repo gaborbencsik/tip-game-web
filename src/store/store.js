@@ -61,11 +61,14 @@ export const store = new Vuex.Store({
   actions: {
     getMatches (context) {
       fetch('/matches', {
-        method: 'GET'
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': 'example'
+        })
       }).then(response => {
         return response.json()
       }).then(data => {
-        context.commit('setState', data)
+        context.commit('setState', data.data)
       }).catch(error => {
         console.log(error)
       })
