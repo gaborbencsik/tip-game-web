@@ -35,7 +35,6 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setState: (state, matches) => {
-      console.log(matches)
       state.matches = matches
     },
 
@@ -70,8 +69,6 @@ export const store = new Vuex.Store({
       }).catch(error => {
         console.log(error)
       })
-      // console.log(matchList)
-      // context.commit('setState', matchList)
     }
   }
 })

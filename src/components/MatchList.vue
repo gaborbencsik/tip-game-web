@@ -15,16 +15,18 @@
         </thead>
 
         <tbody>
-          <tr v-for="match in orderedMatches">
+          <tr :data-matchid="match.matchId" v-for="match in orderedMatches">
             <!-- each match in catalog -->
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
             <td>
-              <span>{{ match.homeGoals }} - </span>
+              <span>{{ match.homeGoals }}</span>
+              <span> - </span>
               <span>{{ match.awayGoals }}</span>
             </td>
             <td>
-              <span>({{ match.halfTimeHomeGoals }} - </span>
+              <span>({{ match.halfTimeHomeGoals }}</span>
+              <span> - </span>
               <span>{{ match.halfTimeAwayGoals }})</span>
             </td>
             <td>{{ match.date | changeDate }}</td>
@@ -50,6 +52,7 @@ export default {
       return this.$store.state.user.authenticated
     },
     orderedMatches () {
+      console.log(this.matches)
       return _.orderBy(this.matches, 'date')
     }
   },
@@ -66,5 +69,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
 
 </style>
