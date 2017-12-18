@@ -4,7 +4,6 @@
     <main>
       <table class='table table-responsive'>
         <thead>
-
           <tr>
             <th>Home</th>
             <th>Away</th>
@@ -53,7 +52,7 @@ export default {
       return this.$store.state.user.authenticated
     },
     tips () {
-      let matchData = this.$store.state.matches.map(match => {
+      return this.$store.state.matches.map(match => {
         return {
           id: match.id,
           homeTeamName: match.homeTeamName,
@@ -61,8 +60,6 @@ export default {
           date: match.tipTimestamp
         }
       })
-      return matchData
-      // let tipData = this.$store.state.tips
     },
     getCount () {
       return this.$store.state.count
