@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
-// Vue.use(require('vue-moment'))
 
 /* eslint-disable no-new */
 new Vue({

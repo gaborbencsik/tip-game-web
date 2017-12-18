@@ -4,15 +4,14 @@ const Validator = require('../services/validateHeaders.js');
 class MatchList {
 
   getAll(req, res, next) {
-    console.log(typeof(req.headers))
-
-    if (Validator.checkCustomHeaders(req.headers)) {
-      Match.find({}).then(function(matches) {
-        res.status(200).send({success: true, data: matches});
-      })
-    } else {
-      res.status(200).send({success: false, message: 'Not authorized.'});
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
     }
+
+    Match.find({}).then(function(matches) {
+      res.status(200).send({success: true, data: matches});
+    })
   }
 }
 

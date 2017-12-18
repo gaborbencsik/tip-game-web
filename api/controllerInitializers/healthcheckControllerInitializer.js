@@ -15,7 +15,7 @@ class HealthcheckControllerInitializer {
   }
 
   setupRoute() {
-    this.app.get('/', this.app.healthcheckController.get)
+    this.app.get('/healthcheck', this.app.healthcheckController.get)
   }
 }
 

@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
       token: '',
       authenticated: false
     },
+    error: '',
     showLogin: true,
     matches: [],
     tips: [
@@ -38,6 +39,14 @@ export const store = new Vuex.Store({
       state.matches = matches
     },
 
+    authenticateUser: (state, user) => {
+      state.user.authenticated = user.authenticated
+      state.user.token = user.token
+    },
+    toggleLoginState: (state, showLogin) => {
+      state.showLogin = showLogin
+    },
+
     increment: (state, count) => {
       state.count += count
     },
@@ -48,14 +57,6 @@ export const store = new Vuex.Store({
 
     set: (state, count) => {
       state.count = count
-    },
-
-    authenticateUser: (state, user) => {
-      state.user.authenticated = user.authenticated
-      state.user.token = user.token
-    },
-    toggleLoginState: (state, showLogin) => {
-      state.showLogin = showLogin
     }
   },
   actions: {
@@ -63,14 +64,14 @@ export const store = new Vuex.Store({
       fetch('/matches', {
         method: 'GET',
         headers: new Headers({
-          'my-custom-header': 'example'
+          'my-custom-header': this.state.user.token
         })
       }).then(response => {
         return response.json()
       }).then(data => {
         context.commit('setState', data.data)
       }).catch(error => {
-        console.log(error)
+        console.log('error', error)
       })
     }
   }

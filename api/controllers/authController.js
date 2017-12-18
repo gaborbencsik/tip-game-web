@@ -3,9 +3,7 @@ const Cryptr = require('cryptr');
 const cryptr = new Cryptr(SALT);
 
 const jwt = require('jwt-simple');
-const secret = 'tip_game_club';
-
-const SALT_ROUNDS = 10;
+const secret = process.env.JWT_SECRET;
 
 const User = require('../models/user.js');
 

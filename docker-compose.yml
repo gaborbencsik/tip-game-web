@@ -6,6 +6,7 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017/tip-game
       - PORT=4509
+      - JWT_SECRET=tip-game
     restart: always
     ports:
       - "4509:4509"

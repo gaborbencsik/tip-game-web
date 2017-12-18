@@ -42,6 +42,7 @@
 <script>
 import _ from 'lodash'
 import moment from 'moment'
+
 export default {
   name: 'matchList',
   computed: {
@@ -52,7 +53,6 @@ export default {
       return this.$store.state.user.authenticated
     },
     orderedMatches () {
-      console.log(this.matches)
       return _.orderBy(this.matches, 'date')
     }
   },
