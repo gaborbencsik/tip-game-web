@@ -1,7 +1,6 @@
 <template>
   <div v-if="authenticated" class="matchList container-fluid">
     <h1>My Tips</h1>
-    {{ tips }}
     <main>
       <table class='table table-responsive'>
         <thead>
@@ -22,10 +21,10 @@
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
             <td>
-              <input class="col-sx-1">
-              <input class="col-sx-1">
+              <input class="col-sx-1" v-model="match.homeGoals">
+              <input class="col-sx-1" v-model="match.awayGoals">
             </td>
-            <td>{{ match.date }}</td>
+            <td>{{ match.lastModified | changeDate }}</td>
             <td>
               <button class="btn btn-primary">Save</button>
             </td>
@@ -43,6 +42,9 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import moment from 'moment'
+
 export default {
   name: 'tips',
   computed: {
@@ -53,14 +55,7 @@ export default {
       return this.$store.state.user.authenticated
     },
     tips () {
-      return this.$store.state.matches.map(match => {
-        return {
-          id: match.id,
-          homeTeamName: match.homeTeamName,
-          awayTeamName: match.awayTeamName,
-          date: match.tipTimestamp
-        }
-      })
+      return _.orderBy(this.$store.state.tips, 'date')
     },
     getCount () {
       return this.$store.state.count
@@ -77,6 +72,15 @@ export default {
     set: function () {
       this.$store.commit('set', parseInt(this.$refs.counter.value))
     }
+  },
+  filters: {
+    changeDate: function (value) {
+      return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).format('YYYY.MM.DD, dddd, HH:mm') : ''
+    }
+  },
+  created: function () {
+    let id = localStorage.getItem('id')
+    this.$store.dispatch('getTips', id)
   }
 }
 </script>

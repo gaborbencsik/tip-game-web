@@ -14,22 +14,7 @@ export const store = new Vuex.Store({
     error: '',
     showLogin: true,
     matches: [],
-    tips: [
-      {
-        'userId': '2',
-        'id': '162537',
-        'homeGoals': '4',
-        'awayGoals': '4',
-        'tipTimestamp': 1506441882776
-      },
-      {
-        'userId': '2',
-        'id': '162536',
-        'homeGoals': '3',
-        'awayGoals': '5',
-        'tipTimestamp': 1506441819019
-      }
-    ]
+    tips: []
   },
   getters: {
 
@@ -37,6 +22,10 @@ export const store = new Vuex.Store({
   mutations: {
     setState: (state, matches) => {
       state.matches = matches
+    },
+
+    setTips: (state, tips) => {
+      state.tips = tips
     },
 
     authenticateUser: (state, user) => {
@@ -70,6 +59,21 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(data => {
         context.commit('setState', data.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+    getTips (context, userId) {
+      fetch(`/user/${userId}/tips`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        console.log(data)
+        context.commit('setTips', data)
       }).catch(error => {
         console.log('error', error)
       })
