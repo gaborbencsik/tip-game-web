@@ -1,59 +1,56 @@
-const wee_db = require('wee-db');
-const tips_db = wee_db('tips.json');
-
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const catalog_adapter = new FileSync('catalog_api.json');
-const catalog_db_getter = low(catalog_adapter);
-const tip_adapter = new FileSync('tips.json');
-const tip_db_getter = low(tip_adapter);
+const Match = require('../models/match.js');
+const Tip = require('../models/tip.js');
+const Validator = require('../services/validateHeaders.js');
 
 class TipsController {
 
-  get(req, res) {
-    const catalog = catalog_db_getter.get('catalog').value();
-    const tips = tips_db.find('tips', {userId: req.params.user_id}).documents;
-
-    let data = [];
-
-    catalog.forEach(item => {
-      let homeGoals, awayGoals, lastModified;
-
-      tips.forEach((tip) => {
-        if(item.id == tip.id) {
-          homeGoals = tip.homeGoals;
-          awayGoals = tip.awayGoals;
-          lastModified = tip.tipTimestamp;
-        }
-      });
-
-      data.push({
-        id: item.id,
-        homeTeamName: item.homeTeamName,
-        awayTeamName: item.awayTeamName,
-        date: item.date,
-        matchday: item.matchday,
-        homeGoals: homeGoals || '',
-        awayGoals: awayGoals || '',
-        lastModified: lastModified || ''
-      });
-    });
-
-    res.json({data: req.params, tips: data})
-  }
-
   save(req, res) {
 
-    console.log(req.params);
-    console.log(req.body);
+    let tip = {
+      userId: req.params.userId,
+      matchId: req.params.matchId,
+      homeGoals: req.body.homeGoals,
+      awayGoals: req.body.awayGoals,
+      lastModified: new Date().toISOString()
+    }
 
-    tips_db.upsert('tips',
-      { userId: req.params.user_id, id: req.params.tip_id },
-      { homeGoals: req.body.home_goals, awayGoals: req.body.away_goals, tipTimestamp: new Date().getTime() });
-
-    res.json({params: req.params, body: req.body})
+    Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}).then(function(tip) {
+      console.log('tip',tip);
+      res.send(tip);
+    }).catch(function(error) {
+      console.log('error',error);
+      res.send(error);
+    })
   }
 
+  get(req, res) {
+    Match.find({}).then(function(matches) {
+      Tip.find({userId: req.params.userId}).then(function(tips) {
+        let tipList = [];
+        matches.forEach(match => {
+          tips.forEach(tip => {
+            tipList.push({
+              matchId: match.matchId,
+              homeTeamName: match.homeTeamName,
+              awayTeamName: match.awayTeamName,
+              date: match.date,
+              matchday: match.matchday,
+              homeGoals: match.matchId === tip.matchId ? tip.homeGoals : '',
+              awayGoals: match.matchId === tip.matchId ? tip.awayGoals : '',
+              lastModified: match.matchId === tip.matchId ? tip.lastModified : ''
+            })
+          })
+        })
+        res.send(tipList);
+      }).catch(function(error) {
+        console.log('error',error);
+        res.send(error);
+      })
+    }).catch(function(error) {
+      console.log('error',error);
+      res.send(error);
+    });
+  }
 }
 
 module.exports = TipsController

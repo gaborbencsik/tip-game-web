@@ -15,8 +15,8 @@ class TipsControllerInitializer {
   }
 
   setupRoute() {
-    this.app.get('/user/:user_id/tips', this.app.tipsController.get)
-    this.app.put('/user/:user_id/tips/:tip_id', this.app.tipsController.save)
+    this.app.get('/user/:userId/tips', this.app.tipsController.get)
+    this.app.put('/user/:userId/matches/:matchId', this.app.tipsController.save)
   }
 }
 

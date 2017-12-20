@@ -3,10 +3,13 @@ const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const helmet = require('helmet')
 
 const uri = process.env.MONGO_URL;
 
 const app = express();
+
+app.use(helmet());
 
 mongoose.Promise = global.Promise;
 

@@ -1,6 +1,7 @@
 <template>
   <div v-if="authenticated" class="matchList container-fluid">
     <h1>My Tips</h1>
+    {{ tips }}
     <main>
       <table class='table table-responsive'>
         <thead>

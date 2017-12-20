@@ -34,10 +34,6 @@ const MatchSchema = new Schema({
   },
   halfTimeAwayGoals: {
     type: Number
-  },
-  matchday: {
-    type: String,
-    required: [true]
   }
 });
 
