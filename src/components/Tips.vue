@@ -20,7 +20,7 @@
             <!-- each match in catalog -->
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
-            <td>
+            <td class="input">
               <input class="col-sx-1" v-model="match.homeGoals">
               <input class="col-sx-1" v-model="match.awayGoals">
             </td>
@@ -32,12 +32,6 @@
         </tbody>
       </table>
     </main>
-    <input type="number" name="" :value="getCount" ref="counter">
-    <button type="button" name="button" v-on:click="set">set</button>
-    <button type="button" name="button" v-on:click="increment">increment by one</button>
-    <button type="button" name="button" v-on:click="decrement">decrement by one</button>
-    <p>{{ getCount }}</p>
-
   </div>
 </template>
 
@@ -56,22 +50,10 @@ export default {
     },
     tips () {
       return _.orderBy(this.$store.state.tips, 'date')
-    },
-    getCount () {
-      return this.$store.state.count
     }
   },
   methods: {
-    increment: function () {
-      console.log('clicked')
-      this.$store.commit('increment', 1)
-    },
-    decrement: function () {
-      this.$store.commit('increment', -1)
-    },
-    set: function () {
-      this.$store.commit('set', parseInt(this.$refs.counter.value))
-    }
+
   },
   filters: {
     changeDate: function (value) {
@@ -89,6 +71,11 @@ export default {
 <style scoped>
   input {
     padding-left: inherit !important;
-    width: 3rem;
+    width: 2rem;
   }
+
+  .input {
+    width: 6rem;
+  }
+
 </style>

@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   strict: true,
   state: {
-    count: 0,
     user: {
       token: '',
       authenticated: false
@@ -17,7 +16,6 @@ export const store = new Vuex.Store({
     tips: []
   },
   getters: {
-
   },
   mutations: {
     setState: (state, matches) => {
@@ -34,18 +32,6 @@ export const store = new Vuex.Store({
     },
     toggleLoginState: (state, showLogin) => {
       state.showLogin = showLogin
-    },
-
-    increment: (state, count) => {
-      state.count += count
-    },
-
-    decrement: (state, count) => {
-      state.count -= count
-    },
-
-    set: (state, count) => {
-      state.count = count
     }
   },
   actions: {
