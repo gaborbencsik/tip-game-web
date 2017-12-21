@@ -24,9 +24,10 @@
               <input class="col-sx-1" v-model="match.homeGoals">
               <input class="col-sx-1" v-model="match.awayGoals">
             </td>
-            <td>{{ match.lastModified | changeDate }}</td>
+            <!-- <td>{{ match.lastModified | changeDate }}</td> -->
+            <td>{{ match.homeGoals }}</td>
             <td>
-              <button class="btn btn-primary">Save</button>
+              <button class="btn btn-primary" @click="saveSingleTip(match.homeGoals, match.awayGoals, match.matchId)">Save</button>
             </td>
           </tr>
         </tbody>
@@ -53,7 +54,27 @@ export default {
     }
   },
   methods: {
+    saveSingleTip: function (homeGoals, awayGoals, matchId) {
+      console.log(homeGoals, awayGoals, matchId, localStorage.getItem('id'))
+      let userId = localStorage.getItem('id')
+      let payload = {
+        homeGoals: parseInt(homeGoals),
+        awayGoals: parseInt(awayGoals)
+      }
+      console.log(payload, userId)
 
+      fetch(`/user/${userId}/matches/${matchId}`, {
+        method: 'PUT',
+        headers: new Headers({
+          'my-custom-header': this.$store.state.user.token
+        }),
+        body: JSON.stringify(payload)
+      }).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    }
   },
   filters: {
     changeDate: function (value) {
