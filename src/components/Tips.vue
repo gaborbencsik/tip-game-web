@@ -24,8 +24,7 @@
               <input class="col-sx-1" v-model="match.homeGoals">
               <input class="col-sx-1" v-model="match.awayGoals">
             </td>
-            <!-- <td>{{ match.lastModified | changeDate }}</td> -->
-            <td>{{ match.homeGoals }}</td>
+            <td>{{ match.lastModified | changeDate }}</td>
             <td>
               <button class="btn btn-primary" @click="saveSingleTip(match.homeGoals, match.awayGoals, match.matchId)">Save</button>
             </td>
@@ -37,6 +36,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -62,18 +62,19 @@ export default {
         awayGoals: parseInt(awayGoals)
       }
       console.log(payload, userId)
-
-      fetch(`/user/${userId}/matches/${matchId}`, {
-        method: 'PUT',
-        headers: new Headers({
-          'my-custom-header': this.$store.state.user.token
-        }),
-        body: JSON.stringify(payload)
-      }).then(response => {
-        console.log(response)
-      }).catch(error => {
-        console.log('error', error)
-      })
+      axios.put(`/user/${userId}/matches/${matchId}`,
+        payload,
+        {headers: {'my-custom-header': this.$store.state.user.token}
+        }).then(response => {
+          console.log(response)
+          this.refreshState()
+        }).catch(error => {
+          console.log('error', error)
+        })
+    },
+    refreshState: function () {
+      let id = localStorage.getItem('id')
+      this.$store.dispatch('getTips', id)
     }
   },
   filters: {
@@ -82,8 +83,7 @@ export default {
     }
   },
   created: function () {
-    let id = localStorage.getItem('id')
-    this.$store.dispatch('getTips', id)
+    this.refreshState()
   }
 }
 </script>
