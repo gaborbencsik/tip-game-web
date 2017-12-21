@@ -38,28 +38,15 @@ class TipsController {
 
       let list = matches.map(match => {
         let tipMatchId = tips[match.matchId];
-        if (tipMatchId === undefined) {
-          return {
-            matchId: match.matchId,
-            homeTeamName: match.homeTeamName,
-            awayTeamName: match.awayTeamName,
-            date: match.date,
-            matchday: match.matchday,
-            homeGoals: '',
-            awayGoals: '',
-            lastModified: ''
-          }
-        } else {
-          return{
-            matchId: match.matchId,
-            homeTeamName: match.homeTeamName,
-            awayTeamName: match.awayTeamName,
-            date: match.date,
-            matchday: match.matchday,
-            homeGoals: tipMatchId.homeGoals,
-            awayGoals: tipMatchId.awayGoals,
-            lastModified: tipMatchId.lastModified
-          }
+        return {
+          matchId: match.matchId,
+          homeTeamName: match.homeTeamName,
+          awayTeamName: match.awayTeamName,
+          date: match.date,
+          matchday: match.matchday,
+          homeGoals: tipMatchId === undefined ? '' : tipMatchId.homeGoals,
+          awayGoals: tipMatchId === undefined ? '' : tipMatchId.awayGoals,
+          lastModified: tipMatchId === undefined ? '' : tipMatchId.lastModified
         }
       });
       res.send(list);
