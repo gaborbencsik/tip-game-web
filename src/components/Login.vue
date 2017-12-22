@@ -52,7 +52,6 @@ export default {
         password: this.credentials.password
       })
       .then(response => {
-        console.log(response)
         if (!response.data.success) {
           this.error = response.data.message
         } else {

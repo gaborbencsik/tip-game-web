@@ -1,6 +1,7 @@
 <template>
   <div v-if="authenticated" class="home">
-
+    <h2>Welcome to Tip Game Club</h2>
+    <p>Here you will see your stats and rankings.</p>
   </div>
 </template>
 

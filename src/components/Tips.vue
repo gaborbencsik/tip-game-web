@@ -55,18 +55,15 @@ export default {
   },
   methods: {
     saveSingleTip: function (homeGoals, awayGoals, matchId) {
-      console.log(homeGoals, awayGoals, matchId, localStorage.getItem('id'))
       let userId = localStorage.getItem('id')
       let payload = {
         homeGoals: parseInt(homeGoals),
         awayGoals: parseInt(awayGoals)
       }
-      console.log(payload, userId)
       axios.put(`/user/${userId}/matches/${matchId}`,
         payload,
         {headers: {'my-custom-header': this.$store.state.user.token}
         }).then(response => {
-          console.log(response)
           this.refreshState()
         }).catch(error => {
           console.log('error', error)

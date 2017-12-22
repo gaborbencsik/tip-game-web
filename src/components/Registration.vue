@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     submit: function () {
-      console.log(this.credentials)
       axios.post('/registration', {
         name: this.credentials.name,
         password: this.credentials.password,

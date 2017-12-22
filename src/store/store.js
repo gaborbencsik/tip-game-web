@@ -58,7 +58,6 @@ export const store = new Vuex.Store({
       }).then(response => {
         return response.json()
       }).then(data => {
-        console.log(data)
         context.commit('setTips', data)
       }).catch(error => {
         console.log('error', error)
