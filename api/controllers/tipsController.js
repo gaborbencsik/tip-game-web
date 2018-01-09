@@ -7,8 +7,6 @@ class TipsController {
 
   save(req, res) {
 
-    console.log('body', req.body);
-
     let tip = {
       userId: req.params.userId,
       matchId: req.params.matchId,
@@ -17,9 +15,8 @@ class TipsController {
       lastModified: new Date().toISOString()
     }
 
-    console.log('tip1', tip);
-
-    Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}).then(function(tip) {
+    Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}
+    ).then(function(tip) {
       console.log('tip2',tip);
       res.send(tip);
     }).catch(function(error) {

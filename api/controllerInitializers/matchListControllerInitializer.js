@@ -7,15 +7,16 @@ class MatchListControllerInitializer{
 
   build() {
     this.setupController();
-    this.setupRoute();
+    this.setupRoutes();
   }
 
   setupController() {
     this.app.matchListController = new MatchListController
   }
 
-  setupRoute() {
+  setupRoutes() {
     this.app.get('/matches', this.app.matchListController.getAll)
+    this.app.get('/user/:userId/matches', this.app.matchListController.getTipsForMatches)
   }
 }
 

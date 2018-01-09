@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
     error: '',
     showLogin: true,
     matches: [],
-    tips: []
+    tips: [],
+    totalScore: 0
   },
   getters: {
   },
@@ -24,6 +25,10 @@ export const store = new Vuex.Store({
 
     setTips: (state, tips) => {
       state.tips = tips
+    },
+
+    setTotalScore: (state, totalScore) => {
+      state.totalScore = totalScore
     },
 
     authenticateUser: (state, user) => {
@@ -45,6 +50,21 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(data => {
         context.commit('setState', data.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+    getMatchesWithTips (context, userId) {
+      fetch(`/user/${userId}/matches`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        context.commit('setState', data.data)
+        context.commit('setTotalScore', data.totalScore)
       }).catch(error => {
         console.log('error', error)
       })

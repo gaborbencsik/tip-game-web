@@ -14,10 +14,8 @@
             </th>
           </tr>
         </thead>
-
         <tbody>
           <tr v-for="match in tips">
-            <!-- each match in catalog -->
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
             <td class="input">
@@ -76,7 +74,8 @@ export default {
   },
   filters: {
     changeDate: function (value) {
-      return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).format('YYYY.MM.DD, dddd, HH:mm') : ''
+      // return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).format('YYYY.MM.DD, dddd, HH:mm') : ''
+      return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).fromNow() : ''
     }
   },
   created: function () {

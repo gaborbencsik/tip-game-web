@@ -1,40 +1,32 @@
 <template>
   <div v-if="authenticated" class="matchList">
-    <h1>MatchList</h1>
+    <header>
+      <h1>MatchList</h1>
+      <p>Total Score: {{ totalScore }}</p>
+    </header>
     <main>
       <table class='table table-responsive'>
         <thead>
-
           <tr>
             <th>Home</th>
             <th>Away</th>
             <th>Result</th>
-            <th>Halftime</th>
+            <th>Tips</th>
+            <th>Points</th>
             <th>Date</th>
           </tr>
         </thead>
-
         <tbody>
           <tr :data-matchid="match.matchId" v-for="match in orderedMatches">
-            <!-- each match in catalog -->
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
-            <td>
-              <span>{{ match.homeGoals }}</span>
-              <span> - </span>
-              <span>{{ match.awayGoals }}</span>
-            </td>
-            <td>
-              <span>({{ match.halfTimeHomeGoals }}</span>
-              <span> - </span>
-              <span>{{ match.halfTimeAwayGoals }})</span>
-            </td>
+            <td class="results">{{ match.homeGoals }} - {{ match.awayGoals }}</td>
+            <td class="results">{{ match.homeGoalsTip }} - {{ match.awayGoalsTip }}</td>
+            <td class="score">{{ match.score }}</td>
             <td>{{ match.date | changeDate }}</td>
           </tr>
         </tbody>
-
       </table>
-
     </main>
   </div>
 </template>
@@ -54,6 +46,9 @@ export default {
     },
     orderedMatches () {
       return _.orderBy(this.matches, 'date')
+    },
+    totalScore () {
+      return this.$store.state.totalScore
     }
   },
   filters: {
@@ -62,14 +57,21 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('getMatches')
+    let id = localStorage.getItem('id')
+    // this.$store.dispatch('getMatches')
+    this.$store.dispatch('getMatchesWithTips', id)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+td.results {
+  width: 4rem;
+}
 
-
+td.score {
+  text-align: center;
+}
 
 </style>
