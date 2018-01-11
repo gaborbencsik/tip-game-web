@@ -6,6 +6,14 @@ const _ = require('lodash');
 class TipsController {
 
   save(req, res) {
+    console.log(req.body);
+    console.log(req.params);
+
+    // check match Date
+
+    let matchData = Match.find({matchId: req.params.matchId}).then(match => {
+      console.log('match from query params',match);
+    });
 
     let tip = {
       userId: req.params.userId,
@@ -16,9 +24,10 @@ class TipsController {
     }
 
     Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}
-    ).then(function(tip) {
-      console.log('tip2',tip);
-      res.send(tip);
+    ).then(function() {
+      Tip.find({userId: req.params.userId, matchId: req.params.matchId}).then(tip => {
+        res.send(tip);
+      })
     }).catch(function(error) {
       console.log('error',error);
       res.send(error);
@@ -33,19 +42,26 @@ class TipsController {
       let matches = values[0];
       let tips = _.keyBy(values[1], 'matchId');
 
-      let list = matches.map(match => {
+      let list = [];
+
+      matches.forEach(match => {
         let tipMatchId = tips[match.matchId];
-        return {
-          matchId: match.matchId,
-          homeTeamName: match.homeTeamName,
-          awayTeamName: match.awayTeamName,
-          date: match.date,
-          matchday: match.matchday,
-          homeGoals: tipMatchId === undefined ? '' : tipMatchId.homeGoals,
-          awayGoals: tipMatchId === undefined ? '' : tipMatchId.awayGoals,
-          lastModified: tipMatchId === undefined ? '' : tipMatchId.lastModified
+        let currentDate = new Date(match.date).getTime();
+
+        if (currentDate > Date.now()) {
+          list.push({
+            matchId: match.matchId,
+            homeTeamName: match.homeTeamName,
+            awayTeamName: match.awayTeamName,
+            date: match.date,
+            matchday: match.matchday,
+            homeGoals: tipMatchId === undefined ? '' : tipMatchId.homeGoals,
+            awayGoals: tipMatchId === undefined ? '' : tipMatchId.awayGoals,
+            lastModified: tipMatchId === undefined ? '' : tipMatchId.lastModified
+          });
         }
       });
+
       res.send(list);
     }).catch(function(error) {
       console.log('error',error);

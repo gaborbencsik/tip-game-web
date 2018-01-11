@@ -30,6 +30,10 @@ const UserSchema = new Schema({
   last_seen: {
     type: Date,
     default: Date.now
+  },
+  score: {
+    type: Number,
+    default: 0
   }
 });
 

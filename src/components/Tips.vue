@@ -9,6 +9,7 @@
             <th>Away</th>
             <th>Tip</th>
             <th>Last modified</th>
+            <th>Time left</th>
             <th>
               <button class="btn btn-success" type="button" name="button" disabled>Save all</button>
             </th>
@@ -23,6 +24,7 @@
               <input class="col-sx-1" v-model="match.awayGoals">
             </td>
             <td>{{ match.lastModified | changeDate }}</td>
+            <td>{{ match.date | timeLeft }}</td>
             <td>
               <button class="btn btn-primary" @click="saveSingleTip(match.homeGoals, match.awayGoals, match.matchId)">Save</button>
             </td>
@@ -74,8 +76,17 @@ export default {
   },
   filters: {
     changeDate: function (value) {
-      // return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).format('YYYY.MM.DD, dddd, HH:mm') : ''
-      return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).fromNow() : ''
+      if (value === undefined) {
+        return ''
+      } else {
+        return moment(value).format('YYYY.MM.DD, dddd, HH:mm') !== 'Invalid date' ? moment(value).fromNow() : ''
+      }
+    },
+    timeLeft: function (value) {
+      let eventDate = new Date(value).getTime()
+      let currentDate = Date.now()
+      let difference = eventDate - currentDate
+      return moment.duration().subtract(difference).humanize()
     }
   },
   created: function () {
@@ -94,5 +105,4 @@ export default {
   .input {
     width: 6rem;
   }
-
 </style>

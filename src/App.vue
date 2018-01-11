@@ -64,4 +64,8 @@ export default {
 header {
   margin-bottom: 2rem;
 }
+
+button {
+  cursor: pointer;
+}
 </style>
