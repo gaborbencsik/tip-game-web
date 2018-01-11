@@ -17,6 +17,10 @@ export default {
       localStorage.setItem('authenticated', false)
       let user = {token: null, authenticated: false}
       this.$store.commit('authenticateUser', user)
+      this.routeToHome()
+    },
+    routeToHome: function () {
+      this.$router.push({ path: 'home' })
     }
   }
 }

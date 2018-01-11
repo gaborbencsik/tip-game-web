@@ -29,10 +29,6 @@ export default {
     this.$store.commit('authenticateUser', {token: token, authenticated: authenticated})
   },
   methods: {
-    logout: function () {
-      localStorage.removeItem('token')
-      localStorage.setItem('authenticated', false)
-    }
   }
 }
 </script>
