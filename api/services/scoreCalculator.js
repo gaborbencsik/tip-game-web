@@ -52,8 +52,14 @@ class ScoreCalculator {
 
   setScore(userId, score) {
     User.findOneAndUpdate({_id: userId}, { $set: { score: score }}, {upsert: true}).then(function(user) {
+      let oldScore = user.score;
       User.find({_id: user._id}).then(function(user) {
-        console.log(user);
+        let newScore = user[0].score
+        if (oldScore > newScore) {
+          console.log({error: 'The old score is higher then the new score'});
+        } else {
+          console.log({message: 'Score update is finished', name: user[0].name, id: user[0]._id});
+        }
       })
     });
   }
