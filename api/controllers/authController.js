@@ -19,7 +19,7 @@ class AuthController {
 
         if (password == req.body.password) {
           let token = jwt.encode({ id: user._id, name: user.name}, SALT);
-          res.status(200).send({ id: user._id, success: true,  token: token });
+          res.status(200).send({ id: user._id, success: true,  token: token, name: user.name });
         } else {
           res.status(200).send({success: false, message: 'Invalid password'})
         }

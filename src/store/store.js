@@ -7,6 +7,7 @@ export const store = new Vuex.Store({
   strict: true,
   state: {
     user: {
+      name: '',
       token: '',
       authenticated: false
     },
@@ -34,26 +35,28 @@ export const store = new Vuex.Store({
     authenticateUser: (state, user) => {
       state.user.authenticated = user.authenticated
       state.user.token = user.token
+      console.log(user)
+      state.user.name = user.name
     },
     toggleLoginState: (state, showLogin) => {
       state.showLogin = showLogin
     }
   },
   actions: {
-    getMatches (context) {
-      fetch('/matches', {
-        method: 'GET',
-        headers: new Headers({
-          'my-custom-header': this.state.user.token
-        })
-      }).then(response => {
-        return response.json()
-      }).then(data => {
-        context.commit('setState', data.data)
-      }).catch(error => {
-        console.log('error', error)
-      })
-    },
+    // getMatches (context) {
+    //   fetch('/matches', {
+    //     method: 'GET',
+    //     headers: new Headers({
+    //       'my-custom-header': this.state.user.token
+    //     })
+    //   }).then(response => {
+    //     return response.json()
+    //   }).then(data => {
+    //     context.commit('setState', data.data)
+    //   }).catch(error => {
+    //     console.log('error', error)
+    //   })
+    // },
     getMatchesWithTips (context, userId) {
       fetch(`/user/${userId}/matches`, {
         method: 'GET',

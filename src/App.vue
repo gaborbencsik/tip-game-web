@@ -46,8 +46,9 @@ export default {
   },
   beforeCreate: function () {
     let token = localStorage.getItem('token')
+    let name = localStorage.getItem('name')
     let authenticated = token
-    this.$store.commit('authenticateUser', {token: token, authenticated: authenticated})
+    this.$store.commit('authenticateUser', {token: token, authenticated: authenticated, name: name})
   }
 }
 </script>
