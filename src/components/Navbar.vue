@@ -5,6 +5,9 @@
         <router-link class="btn" to="/home">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
         <router-link class="btn" to="/tips">Tips</router-link>
+      </nav>
+      <nav>
+        <router-link class="btn" to="/profile">Profile</router-link>
         <logout></logout>
       </nav>
     </header>
@@ -23,6 +26,8 @@ export default {
     return {
     }
   },
+  computed: {
+  },
   beforeCreate: function () {
     let token = localStorage.getItem('token')
     let name = localStorage.getItem('name')
@@ -36,5 +41,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+nav {
+  display: flex
+}
 
 </style>

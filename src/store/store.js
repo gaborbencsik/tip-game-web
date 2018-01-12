@@ -35,7 +35,6 @@ export const store = new Vuex.Store({
     authenticateUser: (state, user) => {
       state.user.authenticated = user.authenticated
       state.user.token = user.token
-      console.log(user)
       state.user.name = user.name
     },
     toggleLoginState: (state, showLogin) => {
