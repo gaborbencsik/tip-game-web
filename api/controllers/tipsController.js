@@ -11,32 +11,36 @@ class TipsController {
       return
     }
 
-    console.log(req.body);
-    console.log(req.params);
+    let matchData = Match.findOne({matchId: req.params.matchId});
 
-    // check match Date
+    Promise.all([matchData]).then(values => {
+      let date = new Date(values[0].date).getTime();
+      let currentDate = Date.now();
+      let timeDifference = date - currentDate;
 
-    let matchData = Match.find({matchId: req.params.matchId}).then(match => {
-      console.log('match from query params',match);
+      if (timeDifference < 0) {
+        res.send({success: false, message: 'You can not submit this tip, because the event is already started.'});
+        return
+      }
+
+      let tip = {
+        userId: req.params.userId,
+        matchId: req.params.matchId,
+        homeGoals: req.body.homeGoals,
+        awayGoals: req.body.awayGoals,
+        lastModified: new Date().toISOString()
+      }
+
+      Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}
+      ).then(function() {
+        Tip.find({userId: req.params.userId, matchId: req.params.matchId}).then(tip => {
+          res.send(tip);
+        })
+      }).catch(function(error) {
+        console.log('error',error);
+        res.send(error);
+      });
     });
-
-    let tip = {
-      userId: req.params.userId,
-      matchId: req.params.matchId,
-      homeGoals: req.body.homeGoals,
-      awayGoals: req.body.awayGoals,
-      lastModified: new Date().toISOString()
-    }
-
-    Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}
-    ).then(function() {
-      Tip.find({userId: req.params.userId, matchId: req.params.matchId}).then(tip => {
-        res.send(tip);
-      })
-    }).catch(function(error) {
-      console.log('error',error);
-      res.send(error);
-    })
   }
 
   get(req, res) {

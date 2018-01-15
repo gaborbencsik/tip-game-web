@@ -1,5 +1,8 @@
 <template>
   <div v-if="authenticated" class="matchList container-fluid">
+    <div class="alert alert-danger" v-if="error">
+      <p>{{ error }}</p>
+    </div>
     <h1>My Tips</h1>
     <main>
       <table class='table table-responsive'>
@@ -42,6 +45,11 @@ import moment from 'moment'
 
 export default {
   name: 'tips',
+  data () {
+    return {
+      error: ''
+    }
+  },
   computed: {
     matches () {
       return this.$store.state.matches
@@ -64,10 +72,16 @@ export default {
         payload,
         {headers: {'my-custom-header': this.$store.state.user.token}
         }).then(response => {
-          this.refreshState()
+          this.manage(response.data)
         }).catch(error => {
           console.log('error', error)
         })
+    },
+    manage: function (data) {
+      if (!data.success) {
+        this.error = data.message
+      }
+      this.refreshState()
     },
     refreshState: function () {
       let id = localStorage.getItem('id')
