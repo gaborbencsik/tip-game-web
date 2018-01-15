@@ -6,8 +6,9 @@ const jwt = require('jwt-simple');
 const secret = process.env.JWT_SECRET;
 
 const User = require('../models/user.js');
+const Validator = require('../services/validateHeaders.js');
 
-class AuthController {
+class UserController {
 
   login(req, res, next) {
 
@@ -51,6 +52,28 @@ class AuthController {
       next();
     });
   }
+
+  getProfile(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    User.findOne({_id: req.params.userId}).then(function(userData) {
+      let user = {
+        name: userData.name,
+        email: userData.email,
+        id: userData._id,
+        score: userData.score,
+        lastSeen: userData.last_seen,
+        registration: userData.registration
+      }
+      res.status(200).send({ user: user, success: true});
+    }).catch(function(error) {
+      console.log(error);
+      next();
+    });
+  }
 }
 
-module.exports = AuthController
+module.exports = UserController

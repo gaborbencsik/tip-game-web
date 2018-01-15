@@ -5,6 +5,7 @@ import MatchList from '@/components/MatchList'
 import Tips from '@/components/Tips'
 import Login from '@/components/Login'
 import Registration from '@/components/Registration'
+import Profile from '@/components/Profile'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ const router = new Router({
       path: '/tips',
       name: 'Tips',
       component: Tips
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     }
   ]
 })

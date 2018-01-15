@@ -6,6 +6,11 @@ const _ = require('lodash');
 class TipsController {
 
   save(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
     console.log(req.body);
     console.log(req.params);
 
@@ -35,6 +40,11 @@ class TipsController {
   }
 
   get(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
     let matchList = Match.find({});
     let tipList = Tip.find({userId: req.params.userId});
 

@@ -9,13 +9,16 @@ export const store = new Vuex.Store({
     user: {
       name: '',
       token: '',
-      authenticated: false
+      email: '',
+      authenticated: false,
+      score: 0,
+      lastSeen: '',
+      registration: ''
     },
     error: '',
     showLogin: true,
     matches: [],
-    tips: [],
-    totalScore: 0
+    tips: []
   },
   getters: {
   },
@@ -30,6 +33,14 @@ export const store = new Vuex.Store({
 
     setTotalScore: (state, totalScore) => {
       state.totalScore = totalScore
+    },
+
+    setUser: (state, user) => {
+      state.user.name = user.name
+      state.user.score = user.score
+      state.user.email = user.email
+      state.user.lastSeen = user.lastSeen
+      state.user.registration = user.registration
     },
 
     authenticateUser: (state, user) => {
@@ -56,6 +67,7 @@ export const store = new Vuex.Store({
     //     console.log('error', error)
     //   })
     // },
+
     getMatchesWithTips (context, userId) {
       fetch(`/user/${userId}/matches`, {
         method: 'GET',
@@ -64,13 +76,14 @@ export const store = new Vuex.Store({
         })
       }).then(response => {
         return response.json()
-      }).then(data => {
-        context.commit('setState', data.data)
-        context.commit('setTotalScore', data.totalScore)
+      }).then(matches => {
+        context.commit('setState', matches.data)
+        context.commit('setTotalScore', matches.totalScore)
       }).catch(error => {
         console.log('error', error)
       })
     },
+
     getTips (context, userId) {
       fetch(`/user/${userId}/tips`, {
         method: 'GET',
@@ -79,8 +92,23 @@ export const store = new Vuex.Store({
         })
       }).then(response => {
         return response.json()
-      }).then(data => {
-        context.commit('setTips', data)
+      }).then(tips => {
+        context.commit('setTips', tips)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+
+    getUser (context, userId) {
+      fetch(`/user/${userId}/profile`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(profile => {
+        context.commit('setUser', profile.user)
       }).catch(error => {
         console.log('error', error)
       })
