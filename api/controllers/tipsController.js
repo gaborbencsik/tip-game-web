@@ -11,6 +11,11 @@ class TipsController {
       return
     }
 
+    if (req.body.homeGoals < 0 || req.body.awayGoals < 0) {
+      res.send({success: false, message: 'Goals can not be negative numbers'})
+      return
+    }
+
     let matchData = Match.findOne({matchId: req.params.matchId});
 
     Promise.all([matchData]).then(values => {
