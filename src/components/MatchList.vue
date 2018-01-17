@@ -5,13 +5,13 @@
       <p>Total Score: {{ totalScore }}</p>
     </header>
     <main>
-      <table class='table table-responsive'>
+      <table class='table table-responsive-xl'>
         <thead>
           <tr>
             <th>Home</th>
             <th>Away</th>
             <th>Result</th>
-            <th>Tips</th>
+            <th>MyTips</th>
             <th>Points</th>
             <th>Date</th>
           </tr>
@@ -20,8 +20,8 @@
           <tr :data-matchid="match.matchId" v-for="match in orderedMatches">
             <td>{{ match.homeTeamName }}</td>
             <td>{{ match.awayTeamName }}</td>
-            <td class="results">{{ match.homeGoals }} - {{ match.awayGoals }}</td>
-            <td class="results">{{ match.homeGoalsTip }} - {{ match.awayGoalsTip }}</td>
+            <td>{{ match.homeGoals }} - {{ match.awayGoals }}</td>
+            <td>{{ match.homeGoalsTip }} - {{ match.awayGoalsTip }}</td>
             <td class="score">{{ match.score }}</td>
             <td>{{ match.date | changeDate }}</td>
           </tr>
@@ -67,7 +67,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 td.results {
-  width: 4rem;
+  width: 70px;
 }
 
 td.score {
