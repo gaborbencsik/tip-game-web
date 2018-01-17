@@ -71,6 +71,12 @@ header {
   margin-bottom: 2rem;
 }
 
+.row > [class^="col-"],
+.row > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 button {
   cursor: pointer;
 }
