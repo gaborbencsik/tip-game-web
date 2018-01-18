@@ -3,37 +3,35 @@
     <div class="alert alert-danger" v-if="error">
       <p>{{ error }}</p>
     </div>
-    <h1>My Tips</h1>
+    <header>
+      <h1>My Tips</h1>
+    </header>
     <main>
-      <table class='table table-responsive'>
-        <thead>
-          <tr>
-            <th>Home</th>
-            <th>Away</th>
-            <th>Tip</th>
-            <th>Last modified</th>
-            <th>Time left</th>
-            <th>
-              <button class="btn btn-success" type="button" name="button" disabled>Save all</button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="match in tips">
-            <td>{{ match.homeTeamName }}</td>
-            <td>{{ match.awayTeamName }}</td>
-            <td class="input">
-              <input class="col-sx-1" v-model="match.homeGoals">
-              <input class="col-sx-1" v-model="match.awayGoals">
-            </td>
-            <td>{{ match.lastModified | changeDate }}</td>
-            <td>{{ match.date | timeLeft }}</td>
-            <td>
+      <b-container fluid>
+        <b-row class="list-head">
+            <b-col cols="4" md="4">Team</b-col>
+            <b-col cols="2" md="2">Tip</b-col>
+            <b-col class="time" cols="2" md="2">Last modified</b-col>
+            <b-col class="time" cols="2" md="2">Time left</b-col>
+            <b-col cols="2" md="2"><button class="btn btn-success" type="button" name="button" disabled>Save all</button></b-col>
+        </b-row>
+        <b-row :data-matchid="match.matchId" v-for="match in tips" :key="match.matchId" class="list-item">
+            <b-col cols="4" md="4">
+              <div>{{ match.homeTeamName }}</div>
+              <div>{{ match.awayTeamName }}</div>
+            </b-col>
+            <b-col cols="2" md="2" class="input">
+              <input v-model="match.homeGoals">
+              <input v-model="match.awayGoals">
+            </b-col>
+            <b-col class="time" cols="2" md="2">{{ match.lastModified | changeDate }}</b-col>
+            <b-col class="time" cols="2" md="2">{{ match.date | timeLeft }}</b-col>
+            <b-col cols="2" md="2">
               <button class="btn btn-primary" @click="saveSingleTip(match.homeGoals, match.awayGoals, match.matchId)">Save</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </b-col>
+        </b-row>
+
+      </b-container>
     </main>
   </div>
 </template>
@@ -111,12 +109,38 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
   input {
     padding-left: inherit !important;
     width: 2rem;
+    border: 1px solid #00000040;
+    text-align: center;
+    border-radius: 20%;
   }
 
   .input {
     width: 6rem;
   }
+
+  .list-item, .list-head {
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .list-head {
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+
+  .list-head > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .time {
+    text-align: center;
+  }
+
 </style>

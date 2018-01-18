@@ -46,4 +46,11 @@ nav {
   display: flex
 }
 
+@media (max-width: 767px) {
+  nav {
+    flex-direction: column;
+  }
+
+}
+
 </style>

@@ -3,7 +3,7 @@
     <div v-if="user.authenticated">
       <navbar></navbar>
     </div>
-    <div v-else class="row container-fluid">
+    <div v-else class="auth container-fluid">
       <div class="col-md-6 col-xs-8 col-xs-offset-2">
       <div v-if="showLoginState">
         <login></login>
@@ -13,7 +13,7 @@
       </div>
       </div>
     </div>
-    <router-view class="container"></router-view>
+    <router-view class="container-fluid"></router-view>
   </div>
 </template>
 
@@ -64,11 +64,22 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.auth {
   margin-top: 60px;
 }
 
 header {
   margin-bottom: 2rem;
+}
+
+main {
+  font-size: .9rem;
+}
+
+h1 {
+  font-size: 2rem;
 }
 
 .row > [class^="col-"],
@@ -80,4 +91,21 @@ header {
 button {
   cursor: pointer;
 }
+
+@media (max-width: 767px) {
+  main {
+    font-size: .7rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .btn.btn-primary,
+  .btn.btn-success {
+    font-size: .7rem;
+  }
+
+}
+
 </style>
