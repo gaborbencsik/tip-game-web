@@ -1,8 +1,12 @@
 <template>
   <div v-if="authenticated" class="matchList container-fluid">
-    <div class="alert alert-danger" v-if="error">
+    <b-alert class="fixed"
+             variant="danger"
+             dismissible
+             :show="error"
+             @dismissed="error=false">
       <p>{{ error }}</p>
-    </div>
+    </b-alert>
     <header>
       <h1>My Tips</h1>
     </header>
@@ -13,7 +17,9 @@
             <b-col cols="2" md="2">Tip</b-col>
             <b-col class="time" cols="2" md="2">Last modified</b-col>
             <b-col class="time" cols="2" md="2">Time left</b-col>
-            <b-col cols="2" md="2"><button class="btn btn-success" type="button" name="button" disabled>Save all</button></b-col>
+            <b-col cols="2" md="2">
+              <button class="btn btn-success" disabled>Save all</button>
+            </b-col>
         </b-row>
         <b-row :data-matchid="match.matchId" v-for="match in tips" :key="match.matchId" class="list-item">
             <b-col cols="4" md="4">
@@ -45,7 +51,7 @@ export default {
   name: 'tips',
   data () {
     return {
-      error: ''
+      error: false
     }
   },
   computed: {
@@ -61,6 +67,10 @@ export default {
   },
   methods: {
     saveSingleTip: function (homeGoals, awayGoals, matchId) {
+      if (homeGoals === '' || awayGoals === '') {
+        this.error = 'Tip field can not be blank'
+        return
+      }
       let userId = localStorage.getItem('id')
       let payload = {
         homeGoals: parseInt(homeGoals),
@@ -141,6 +151,13 @@ export default {
 
   .time {
     text-align: center;
+  }
+
+  .alert.fixed {
+    position: fixed;
+    top: 20px;
+    margin: 0 auto;
+    z-index: 999;
   }
 
 </style>

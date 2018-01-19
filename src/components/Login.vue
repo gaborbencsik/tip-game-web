@@ -1,12 +1,14 @@
 <template>
   <div class="login">
-    <!-- <div class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2"> -->
     <div class="">
       <h2>Log In</h2>
 
-      <div class="alert alert-danger" v-if="error">
+      <b-alert variant="danger"
+               dismissible
+               :show="error"
+               @dismissed="error=false">
         <p>{{ error }}</p>
-      </div>
+      </b-alert>
       <div class="form-group">
         <input
           type="text"
@@ -40,7 +42,7 @@ export default {
         name: '',
         password: ''
       },
-      error: '',
+      error: false,
       showLogin: true
     }
   },

@@ -3,13 +3,20 @@
     <div class="">
       <h2>Registration</h2>
 
-      <div class="alert alert-danger" v-if="error">
+      <!-- <div class="alert alert-danger" v-if="error">
         <p>{{ error }}</p>
-      </div>
-      <div class="alert alert-success" v-if="success">
+      </div> -->
+      <b-alert variant="danger"
+               dismissible
+               :show="error"
+               @dismissed="error=false">
+        <p>{{ error }}</p>
+      </b-alert>
+      <b-alert variant="success"
+               :show="success">
         <p>Your registration was successful.</p>
         <a class="alert-link login-text" @click="changeLoginState()">Login here!</a>
-      </div>
+      </b-alert>
       <div class="form-group">
         <input
           type="text"
@@ -52,7 +59,7 @@ export default {
         password: '',
         email: ''
       },
-      error: '',
+      error: false,
       showLogin: false,
       success: false
     }
@@ -69,6 +76,7 @@ export default {
           this.error = response.data.message
         } else {
           this.success = true
+          this.error = false
         }
       })
       .catch(error => {
