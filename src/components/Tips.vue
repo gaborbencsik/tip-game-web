@@ -120,18 +120,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-  input {
-    padding-left: inherit !important;
-    width: 2rem;
-    border: 1px solid #00000040;
-    text-align: center;
-    border-radius: 20%;
-  }
-
-  .input {
-    width: 6rem;
-  }
-
   .list-item, .list-head {
     border-bottom: 1px solid black;
     padding-bottom: 10px;

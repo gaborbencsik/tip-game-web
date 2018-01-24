@@ -74,7 +74,7 @@ header {
   margin-bottom: 2rem;
 }
 
-main {
+main, select {
   font-size: .9rem;
 }
 
@@ -86,6 +86,18 @@ h1 {
 .row > [class*=" col-"] {
   padding-right: 0;
   padding-left: 0;
+}
+
+input {
+  padding-left: inherit !important;
+  width: 2rem;
+  border: 1px solid #00000040;
+  text-align: center;
+  border-radius: 20%;
+}
+
+.input {
+  width: 6rem;
 }
 
 button {

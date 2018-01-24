@@ -5,43 +5,28 @@
       <h2>{{ username | capitalize }}</h2>
     </header>
     <main>
-      <div class="row">
-        <div class="col-xs-4 col-xs-offset-2">
-          Username
-        </div>
-        <div class="col-xs-4">
-          {{ getUser.name }}
-        </div>
-      </div>
-      <table class='table table-responsive-sm'>
-        <tbody>
-          <tr>
-            <td>Username</td>
-            <td>{{ getUser.name }}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{{ getUser.email }}</td>
-          </tr>
-          <tr>
-            <td>Score</td>
-            <td>{{ getUser.score }}</td>
-          </tr>
-
-        </tbody>
-      </table>
-      <table class='table table-responsive-sm'>
-        <tbody>
-          <tr>
-            <td>Favourite Team</td>
-            <td class="input">
-              <input v-model="favouriteTeam">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <b-container fluid>
+        <b-row class="list-item">
+            <b-col cols="5" md="5">Username</b-col>
+            <b-col cols="7" md="7">{{ getUser.name }}</b-col>
+        </b-row>
+        <b-row class="list-item">
+            <b-col cols="5" md="5">Email</b-col>
+            <b-col cols="7" md="7">{{ getUser.email }}</b-col>
+        </b-row>
+        <b-row class="list-item">
+            <b-col cols="5" md="5">Score</b-col>
+            <b-col cols="7" md="7">{{ getUser.score }}</b-col>
+        </b-row>
+        <b-row class="list-item">
+            <b-col cols="5" md="5">Favourite Team</b-col>
+            <b-col cols="7" md="7" class="favourite-team-selector">
+              <b-form-select v-model="selectedTeam" :options="options" class="select"></b-form-select>
+              <button class="btn btn-primary" @click="setFavouriteTeam()">Set</button>
+            </b-col>
+        </b-row>
+      </b-container>
     </main>
-
   </div>
 </template>
 
@@ -50,7 +35,11 @@ export default {
   name: 'profile',
   data () {
     return {
-      favouriteTeam: ''
+      selectedTeam: null,
+      options: [
+        { value: 1, text: 'Dortmund' },
+        { value: 2, text: 'Bayern' }
+      ]
     }
   },
   computed: {
@@ -65,6 +54,11 @@ export default {
     },
     getAvatarUrl () {
       return `https://avatars.dicebear.com/v1/male/${this.username}/50.png`
+    }
+  },
+  methods: {
+    setFavouriteTeam () {
+      console.log(this.selectedTeam)
     }
   },
   filters: {
@@ -82,6 +76,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+main {
+  font-size: .9rem;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -89,6 +87,47 @@ header {
 
 h2 {
   margin-left: 1rem;
+}
+
+input {
+  width: 6rem;
+}
+
+select {
+  width: 70%;
+  font-size: .9rem;
+  height: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* DIRTY hack  */
+
+select.form-control:not([size]):not([multiple]) {
+  height: calc(1.5rem + 2px);
+}
+
+.list-item {
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.list-item > div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+div.favourite-team-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.favourite-team-selector > select,
+.favourite-team-selector > button {
+  width: 40%;
 }
 
 </style>

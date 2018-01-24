@@ -2,10 +2,6 @@
   <div class="registration">
     <div class="">
       <h2>Registration</h2>
-
-      <!-- <div class="alert alert-danger" v-if="error">
-        <p>{{ error }}</p>
-      </div> -->
       <b-alert variant="danger"
                dismissible
                :show="error"
