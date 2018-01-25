@@ -18,6 +18,7 @@ class UserControllerInitializer {
     this.app.post('/login', this.app.userController.login)
     this.app.post('/registration', this.app.userController.register)
     this.app.get('/user/:userId/profile', this.app.userController.getProfile)
+    this.app.post('/user/:userId/favourite-team', this.app.userController.setFavouriteTeam)
   }
 }
 

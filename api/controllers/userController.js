@@ -74,6 +74,31 @@ class UserController {
       next();
     });
   }
+
+  setFavouriteTeam(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    const user = User.findOne({_id:req.params.userId}).then(user => {
+
+      if (user.favourite_team != undefined) {
+        res.status(200).send({success: false, message: 'Favourite team can be set only once', user: user});
+        return
+      }
+
+      User.findOneAndUpdate({_id: req.params.userId}, {favourite_team: req.body.favouriteTeam}, {upsert: true}
+      ).then(user => {
+        User.findOne({_id: req.params.userId}).then(user => {
+          res.status(200).send({success: true, user: user});
+        })
+      });
+    }).catch(error => {
+      console.log('error', error);
+      res.status(200).send({success: false, message: error});
+    });
+  }
 }
 
 module.exports = UserController
