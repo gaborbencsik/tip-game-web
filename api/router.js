@@ -19,6 +19,10 @@ class Router {
     initialzers.forEach( (initialzer) => {
       initialzer.build();
     })
+
+    this.app.use(function(req, res){
+      res.status(404).send({success: false, message: 'Oppps'});
+   });
   }
 }
 

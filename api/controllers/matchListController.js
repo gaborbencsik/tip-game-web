@@ -1,6 +1,8 @@
 const Match = require('../models/match.js');
 const Validator = require('../services/validateHeaders.js');
 const Tip = require('../models/tip.js');
+const Team = require('../models/team.js');
+
 const _ = require('lodash');
 
 class MatchList {
@@ -34,7 +36,7 @@ class MatchList {
         let tipMatchId = tips[match.matchId];
         let homeGoalsTip = tipMatchId === undefined ? null : tipMatchId.homeGoals;
         let awayGoalsTip = tipMatchId === undefined ? null : tipMatchId.awayGoals;
-        
+
         let score = Utils.countScore(match.homeGoals, match.awayGoals, homeGoalsTip , awayGoalsTip);
         totalScore += score;
 
@@ -52,10 +54,32 @@ class MatchList {
           score: score
         }
       });
-      res.send({data: list, totalScore: totalScore});
+      res.send({ success: true, data: list, totalScore: totalScore});
     }).catch(function(error) {
       console.log('error',error);
-      res.send(error);
+      res.send({success: false, message: error});
+    });
+  }
+
+  getTeams(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    Team.find({}).then(teams => {
+      let teamList = teams.map(team => {
+        return {
+          id: team._id,
+          code: team.code,
+          name: team.name,
+          shortName: team.shortName
+        }
+      });
+      res.send({success: true, data: teamList})
+    }).catch(error => {
+      console.log('error', error);
+      res.send({success: false, message: error});
     });
   }
 }

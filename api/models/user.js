@@ -17,7 +17,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    equired: [true, 'Password is required.']
+    required: [true, 'Password is required.']
   },
   admin: {
     type: Boolean,
@@ -34,6 +34,9 @@ const UserSchema = new Schema({
   score: {
     type: Number,
     default: 0
+  },
+  favouriteTeam: {
+    type: String
   }
 });
 

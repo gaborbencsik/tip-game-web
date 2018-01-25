@@ -15,8 +15,9 @@ class MatchListControllerInitializer{
   }
 
   setupRoutes() {
-    this.app.get('/matches', this.app.matchListController.getAll)
-    this.app.get('/user/:userId/matches', this.app.matchListController.getTipsForMatches)
+    this.app.get('/competition/matches', this.app.matchListController.getAll)
+    this.app.get('/user/:userId/competition/matches', this.app.matchListController.getTipsForMatches)
+    this.app.get('/competition/teams', this.app.matchListController.getTeams)
   }
 }
 
