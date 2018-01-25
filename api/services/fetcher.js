@@ -13,7 +13,7 @@ mongoose.connect(uri, {
   console.log(error);
 });
 
-const url = 'http://api.football-data.org/v1/competitions/452/fixtures';
+const competitionsUrl = 'http://api.football-data.org/v1/competitions/452/fixtures';
 
 class MatchFetcher {
 
@@ -63,6 +63,8 @@ class MatchFetcher {
         console.log('error: ',error);
       });
     });
+    console.log(JSON.stringify({message: 'Competition results updated', timestamp: new Date, process_id: process.pid}));
+    process.exit(0);
   }
 }
 
@@ -81,6 +83,6 @@ let ApiClient = {
 }
 
 const manager = new MatchFetcher;
-ApiClient.fetchData(url)
-  .then((data) => { manager.parseApi(data) })
-  .catch(error => { console.log(error); });
+ApiClient.fetchData(competitionsUrl)
+  .then(matches => { manager.parseApi(matches) })
+  .catch(error => { console.log('error', error) });

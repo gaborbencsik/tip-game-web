@@ -18,7 +18,7 @@ const url = 'http://api.football-data.org/v1/competitions/452/teams';
 
 class TeamFetcher {
 
-  parseApi(teamListObj) {
+  parseTeamList(teamListObj) {
 
     let teamList = teamListObj.teams;
 
@@ -40,7 +40,9 @@ class TeamFetcher {
       }).catch(function(error) {
         console.log('error',error);
       });
-    })
+    });
+    console.log(JSON.stringify({message: 'Teams updated', timestamp: new Date, process_id: process.pid}));
+    process.exit(0);
   }
 }
 
@@ -60,5 +62,5 @@ let ApiClient = {
 
 const fetcher = new TeamFetcher;
 ApiClient.fetchData(url)
-  .then((data) => { fetcher.parseApi(data) })
+  .then((data) => { fetcher.parseTeamList(data) })
   .catch(error => { console.log(error); });
