@@ -18,7 +18,8 @@ export const store = new Vuex.Store({
     error: '',
     showLogin: true,
     matches: [],
-    tips: []
+    tips: [],
+    teams: []
   },
   getters: {
   },
@@ -43,6 +44,10 @@ export const store = new Vuex.Store({
       state.user.registration = user.registration
     },
 
+    setTeamList: (state, teams) => {
+      state.teams = teams
+    },
+
     authenticateUser: (state, user) => {
       state.user.authenticated = user.authenticated
       state.user.token = user.token
@@ -54,7 +59,7 @@ export const store = new Vuex.Store({
   },
   actions: {
     // getMatches (context) {
-    //   fetch('/matches', {
+    //   fetch('/competition/matches', {
     //     method: 'GET',
     //     headers: new Headers({
     //       'my-custom-header': this.state.user.token
@@ -69,7 +74,7 @@ export const store = new Vuex.Store({
     // },
 
     getMatchesWithTips (context, userId) {
-      fetch(`/user/${userId}/matches`, {
+      fetch(`/user/${userId}/competition/matches`, {
         method: 'GET',
         headers: new Headers({
           'my-custom-header': this.state.user.token
@@ -112,6 +117,22 @@ export const store = new Vuex.Store({
       }).catch(error => {
         console.log('error', error)
       })
+    },
+
+    getTeams (context) {
+      fetch(`/competition/teams`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(teams => {
+        context.commit('setTeamList', teams.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
     }
+
   }
 })

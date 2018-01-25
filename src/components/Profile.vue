@@ -21,11 +21,12 @@
         <b-row class="list-item">
             <b-col cols="5" md="5">Favourite Team</b-col>
             <b-col cols="7" md="7" class="favourite-team-selector">
-              <b-form-select v-model="selectedTeam" :options="options" class="select"></b-form-select>
+              <b-form-select v-model="selectedTeam" :options="getTeams" class="select"></b-form-select>
               <button class="btn btn-primary" @click="setFavouriteTeam()">Set</button>
             </b-col>
         </b-row>
       </b-container>
+      {{ getUser }}
     </main>
   </div>
 </template>
@@ -36,10 +37,7 @@ export default {
   data () {
     return {
       selectedTeam: null,
-      options: [
-        { value: 1, text: 'Dortmund' },
-        { value: 2, text: 'Bayern' }
-      ]
+      options: []
     }
   },
   computed: {
@@ -54,6 +52,14 @@ export default {
     },
     getAvatarUrl () {
       return `https://avatars.dicebear.com/v1/male/${this.username}/50.png`
+    },
+    getTeams () {
+      return this.$store.state.teams.map(team => {
+        return {
+          value: team.code,
+          text: team.shortName
+        }
+      })
     }
   },
   methods: {
@@ -69,6 +75,7 @@ export default {
   created: function () {
     let id = localStorage.getItem('id')
     this.$store.dispatch('getUser', id)
+    this.$store.dispatch('getTeams')
   }
 }
 </script>
@@ -121,13 +128,17 @@ select.form-control:not([size]):not([multiple]) {
 div.favourite-team-selector {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
 }
 
 .favourite-team-selector > select,
 .favourite-team-selector > button {
   width: 40%;
+}
+
+.favourite-team-selector > button {
+  margin-left: 1rem;
 }
 
 </style>
