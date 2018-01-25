@@ -1,5 +1,12 @@
 <template class="container-fluid">
   <div v-if="authenticated" class="profile">
+    <b-alert class="fixed"
+             variant="danger"
+             dismissible
+             :show="error"
+             @dismissed="error=false">
+      <p>{{ error }}</p>
+    </b-alert>
     <header>
       <img v-bind:src="getAvatarUrl" v-bind:title="username">
       <h2>{{ username | capitalize }}</h2>
@@ -26,18 +33,20 @@
             </b-col>
         </b-row>
       </b-container>
-      {{ getUser }}
     </main>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'profile',
   data () {
     return {
       selectedTeam: null,
-      options: []
+      options: [],
+      error: false
     }
   },
   computed: {
@@ -65,6 +74,23 @@ export default {
   methods: {
     setFavouriteTeam () {
       console.log(this.selectedTeam)
+      let userId = localStorage.getItem('id')
+      let payload = { favouriteTeam: this.selectedTeam }
+      axios.post(`/user/${userId}/competition/favourite-team`,
+        payload,
+        {headers: {'my-custom-header': this.$store.state.user.token}
+        }).then(response => {
+          this.manage(response.data)
+          console.log(response)
+        }).catch(error => {
+          console.log('error', error)
+        })
+    },
+    manage: function (data) {
+      if (!data.success) {
+        this.error = data.message
+      }
+      // this.refreshState()
     }
   },
   filters: {
