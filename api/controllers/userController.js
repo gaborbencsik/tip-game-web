@@ -66,7 +66,8 @@ class UserController {
         id: userData._id,
         score: userData.score,
         lastSeen: userData.last_seen,
-        registration: userData.registration
+        registration: userData.registration,
+        favouriteTeam: userData.favourite_team
       }
       res.status(200).send({ user: user, success: true});
     }).catch(function(error) {

@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
       authenticated: false,
       score: 0,
       lastSeen: '',
-      registration: ''
+      registration: '',
+      favouriteTeam: ''
     },
     error: '',
     showLogin: true,
@@ -42,6 +43,7 @@ export const store = new Vuex.Store({
       state.user.email = user.email
       state.user.lastSeen = user.lastSeen
       state.user.registration = user.registration
+      state.user.favouriteTeam = user.favouriteTeam
     },
 
     setTeamList: (state, teams) => {

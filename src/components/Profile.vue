@@ -28,7 +28,7 @@
         <b-row class="list-item">
             <b-col cols="5" md="5">Favourite Team</b-col>
             <b-col cols="7" md="7" class="favourite-team-selector">
-              <b-form-select v-model="selectedTeam" :options="getTeams" class="select"></b-form-select>
+              <b-form-select v-model="selectedTeam" :options="getTeams" class="select" :value="favouriteTeam"></b-form-select>
               <button class="btn btn-primary" @click="setFavouriteTeam()">Set</button>
             </b-col>
         </b-row>
@@ -55,6 +55,13 @@ export default {
     },
     username () {
       return this.$store.state.user.name
+    },
+    favouriteTeam () {
+      if (this.$store.state.user.favouriteTeam === undefined) {
+        this.selectedTeam = ''
+      } else {
+        this.selectedTeam = this.$store.state.user.favouriteTeam
+      }
     },
     getUser () {
       return this.$store.state.user
