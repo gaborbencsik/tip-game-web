@@ -100,6 +100,21 @@ class UserController {
       res.status(200).send({success: false, message: error});
     });
   }
+
+  getCurrentScore(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    User.findOne({_id: req.params.userId}).then(user => {
+      let score = user.score;
+      res.status(200).send({success: true, score: score})
+    }).catch(error => {
+      console.log(error);
+      res.status(200).send({success: false, message: error});
+    });
+  }
 }
 
 module.exports = UserController

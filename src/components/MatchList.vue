@@ -2,7 +2,7 @@
   <div v-if="authenticated" class="matchList">
     <header>
       <h1>MatchList</h1>
-      <p>Total Score: {{ totalScore }}</p>
+      <p>Total Score: {{ score }}</p>
     </header>
     <main>
       <b-container fluid>
@@ -45,13 +45,13 @@ export default {
     orderedMatches () {
       return _.orderBy(this.matches, 'date')
     },
-    totalScore () {
-      return this.$store.state.totalScore
+    score () {
+      console.log('matcht list compontent', this.$store.state.user.score)
+      return this.$store.state.user.score
     }
   },
   filters: {
     changeDate: function (value) {
-      // return moment(value).format('YYYY.MM.DD, dddd, HH:mm')
       return moment(value).format('YYYY.MM.DD, HH:mm')
     }
   },
@@ -59,6 +59,7 @@ export default {
     let id = localStorage.getItem('id')
     // this.$store.dispatch('getMatches')
     this.$store.dispatch('getMatchesWithTips', id)
+    this.$store.dispatch('getCurrentScore', id)
   }
 }
 </script>

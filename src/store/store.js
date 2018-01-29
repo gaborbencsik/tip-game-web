@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
       token: '',
       email: '',
       authenticated: false,
-      score: 0,
+      score: '',
       lastSeen: '',
       registration: '',
       favouriteTeam: ''
@@ -33,8 +33,8 @@ export const store = new Vuex.Store({
       state.tips = tips
     },
 
-    setTotalScore: (state, totalScore) => {
-      state.totalScore = totalScore
+    setTotalScore: (state, score) => {
+      state.user.score = score
     },
 
     setUser: (state, user) => {
@@ -131,6 +131,22 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(teams => {
         context.commit('setTeamList', teams.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+
+    getCurrentScore (context, userId) {
+      fetch(`/user/${userId}/score`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(score => {
+        console.log('store', score)
+        context.commit('setTotalScore', score.score)
       }).catch(error => {
         console.log('error', error)
       })
