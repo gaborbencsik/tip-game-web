@@ -8,10 +8,8 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(uri, {
   useMongoClient: true
-}).then(function(data) {
-}).catch(function(error) {
-  console.log(error);
-});
+}).then(function(data) { console.log('connected to mongo' );
+}).catch(function(error) { console.log(error) });
 
 const competitionsUrl = 'http://api.football-data.org/v1/competitions/452/fixtures';
 
@@ -23,7 +21,6 @@ class MatchFetcher {
     object.forEach((item) => {
 
       let id = item._links.self.href.slice(-6);
-
       let halfTimeHomeGoals1 = null;
       let halfTimeAwayGoals1 = null;
 
@@ -45,7 +42,7 @@ class MatchFetcher {
         status: item.status
       };
 
-      Match.findOne({matchId: id}).then(function(prevMatch) {
+      let update = Match.findOne({matchId: id}).then(function(prevMatch) {
         if (prevMatch == null) {
           Match.create(matchItem).then(function(newMatch) {
             console.log('new match item created: ',newMatch);
@@ -63,8 +60,10 @@ class MatchFetcher {
         console.log('error: ',error);
       });
     });
-    console.log(JSON.stringify({message: 'Competition results updated', timestamp: new Date, process_id: process.pid}));
-    process.exit(0);
+
+    // console.log(JSON.stringify({message: 'Competition results updated', timestamp: new Date, process_id: process.pid}));
+    // process.exit(0);
+
   }
 }
 
