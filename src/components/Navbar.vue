@@ -7,7 +7,11 @@
         <router-link class="btn" to="/tips">Tips</router-link>
       </nav>
       <nav>
-        <router-link class="btn" to="/profile">Profile</router-link>
+        <router-link class="btn" to="/profile">
+          <img v-bind:src="getAvatarUrl" v-bind:title="username">
+          {{ username | capitalize }}
+        </router-link>
+        <!-- <router-link class="btn" to="/profile">Profile</router-link> -->
         <logout></logout>
       </nav>
     </header>
@@ -27,6 +31,12 @@ export default {
     }
   },
   computed: {
+    username () {
+      return this.$store.state.user.name
+    },
+    getAvatarUrl () {
+      return `https://avatars.dicebear.com/v1/male/${this.username}/25.png`
+    }
   },
   beforeCreate: function () {
     let token = localStorage.getItem('token')
@@ -35,6 +45,11 @@ export default {
     this.$store.commit('authenticateUser', {token: token, authenticated: authenticated, name: name})
   },
   methods: {
+  },
+  filters: {
+    capitalize: function (name) {
+      return name.charAt(0).toUpperCase() + name.slice(1)
+    }
   }
 }
 </script>
