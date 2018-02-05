@@ -46,7 +46,6 @@ export default {
       return _.orderBy(this.matches, 'date')
     },
     score () {
-      console.log('matcht list compontent', this.$store.state.user.score)
       return this.$store.state.user.score
     }
   },
@@ -57,7 +56,6 @@ export default {
   },
   created: function () {
     let id = localStorage.getItem('id')
-    // this.$store.dispatch('getMatches')
     this.$store.dispatch('getMatchesWithTips', id)
     this.$store.dispatch('getCurrentScore', id)
   }

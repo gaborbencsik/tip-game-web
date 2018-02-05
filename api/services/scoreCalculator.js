@@ -33,16 +33,17 @@ class ScoreCalculator {
           let totalScore = 0;
 
           matches.forEach(match => {
-            let tipMatchId = tips[match.matchId];
+            let existingTip = tips[match.matchId];
 
-            if (tipMatchId === undefined) {
+            if (existingTip === undefined) {
               totalScore += 0
             } else {
-              let score = this.countScore(match.homeGoals, match.awayGoals, tipMatchId.homeGoals, tipMatchId.awayGoals)
+              let score = this.countScore(match.homeGoals, match.awayGoals, existingTip.homeGoals, existingTip.awayGoals)
+              this.setTipScore(existingTip.userId, existingTip.matchId, score)
               totalScore += score
             }
           });
-          this.setScore(user._id, totalScore);
+          this.setTotalScore(user._id, totalScore);
         });
       });
     }).catch(error => {
@@ -50,17 +51,35 @@ class ScoreCalculator {
     });
   }
 
-  setScore(userId, score) {
-    User.findOneAndUpdate({_id: userId}, { $set: { score: score }}, {upsert: true}).then(function(user) {
-      let oldScore = user.score;
-      User.find({_id: user._id}).then(function(user) {
-        let newScore = user[0].score
-        if (oldScore > newScore) {
-          console.log({error: 'The old score is higher then the new score'});
-        } else {
-          console.log({message: 'Score update is finished', name: user[0].name, id: user[0]._id});
-        }
-      })
+  setTipScore(userId, matchId, score) {
+
+    let match = Match.findOne({matchId: matchId}).then(match => {
+      if (match.homeGoals != null || match.awayGoals != null) {
+        Tip.findOne({userId: userId, matchId: matchId}).then(tip => {
+          Tip.findOneAndUpdate({userId: userId, matchId: matchId}, {score: score}, {upsert: true}
+          ).then(tip => {
+            console.log('tip score is updated', {matchId: tip.matchId, userId: tip.userId, score: tip.score});
+          }).catch(function(error) {
+            console.log('error',error);
+          });
+        })
+      }
+    });
+  }
+
+  setTotalScore(userId, score) {
+
+    User.find({_id: userId}).then(user => {
+      let oldScore = user[0].score;
+      if (oldScore <= score) {
+        User.findOneAndUpdate({_id: userId}, { $set: { score: score }}, {upsert: true}).then(user => {
+          console.log({message: 'Score update was successful', name: user.name, id: user._id});
+        }).catch(error => {
+          console.log(error);
+        });
+      } else {
+        console.log({id: user[0]._id, name: user[0].name, error: 'The old score is higher then the new score', old: oldScore, new: score});
+      }
     });
   }
 

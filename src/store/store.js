@@ -85,7 +85,7 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(matches => {
         context.commit('setState', matches.data)
-        context.commit('setTotalScore', matches.totalScore)
+        // context.commit('setTotalScore', matches.totalScore)
       }).catch(error => {
         console.log('error', error)
       })
@@ -145,7 +145,6 @@ export const store = new Vuex.Store({
       }).then(response => {
         return response.json()
       }).then(score => {
-        console.log('store', score)
         context.commit('setTotalScore', score.score)
       }).catch(error => {
         console.log('error', error)

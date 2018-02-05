@@ -30,15 +30,12 @@ class MatchList {
     Promise.all([matchList, tipList]).then(values => {
       let matches = values[0];
       let tips = _.keyBy(values[1], 'matchId');
-      let totalScore = 0;
 
       let list = matches.map(match => {
         let tipMatchId = tips[match.matchId];
         let homeGoalsTip = tipMatchId === undefined ? null : tipMatchId.homeGoals;
         let awayGoalsTip = tipMatchId === undefined ? null : tipMatchId.awayGoals;
-
-        let score = Utils.countScore(match.homeGoals, match.awayGoals, homeGoalsTip , awayGoalsTip);
-        totalScore += score;
+        let score = tipMatchId === undefined ? null : tipMatchId.score;
 
         return {
           matchId: match.matchId,
@@ -54,7 +51,7 @@ class MatchList {
           score: score
         }
       });
-      res.send({ success: true, data: list, totalScore: totalScore});
+      res.send({ success: true, data: list});
     }).catch(function(error) {
       console.log('error',error);
       res.send({success: false, message: error});
@@ -85,21 +82,3 @@ class MatchList {
 }
 
 module.exports = MatchList
-
-class Utils {
-  static countScore(homeGoals, awayGoals, homeGoalsTip, awayGoalsTip) {
-    let score = 0;
-    if (homeGoals == null || awayGoals == null) {
-      score = 0
-    } else if (homeGoals == homeGoalsTip && awayGoals == awayGoalsTip) {
-      score = 3
-    } else if (homeGoals > awayGoals && homeGoalsTip > awayGoalsTip ||
-      homeGoals / awayGoals == 1 && homeGoalsTip / awayGoalsTip == 1 ||
-      homeGoals < awayGoals && homeGoalsTip < awayGoalsTip) {
-      score = 1
-    } else {
-      score = 0
-    }
-    return score
-  }
-}

@@ -22,7 +22,11 @@ const TipSchema = new Schema({
   awayGoals: {
     type: Number,
     required: [true]
-  }
+  },
+  score: {
+    type: Number,
+    default: null
+  },
 });
 
 const Tip = mongoose.model('tip', TipSchema);
