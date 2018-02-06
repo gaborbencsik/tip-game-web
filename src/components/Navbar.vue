@@ -11,7 +11,6 @@
           <img v-bind:src="getAvatarUrl" v-bind:title="username">
           {{ username | capitalize }}
         </router-link>
-        <!-- <router-link class="btn" to="/profile">Profile</router-link> -->
         <logout></logout>
       </nav>
     </header>

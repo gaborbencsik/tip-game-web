@@ -38,7 +38,8 @@ class ScoreCalculator {
             if (existingTip === undefined) {
               totalScore += 0
             } else {
-              let score = this.countScore(match.homeGoals, match.awayGoals, existingTip.homeGoals, existingTip.awayGoals)
+              let isDoubleScore = this.isDoubleScore(match.homeTeamName, match.awayTeamName, user.favourite_team);
+              let score = this.countScore(match.homeGoals, match.awayGoals, existingTip.homeGoals, existingTip.awayGoals, isDoubleScore)
               this.setTipScore(existingTip.userId, existingTip.matchId, score)
               totalScore += score
             }
@@ -49,6 +50,14 @@ class ScoreCalculator {
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  isDoubleScore(homeTeamName, awayTeamName, favouriteTeam) {
+    if (homeTeamName === favouriteTeam || awayTeamName === favouriteTeam) {
+      return true
+    } else {
+      return false
+    }
   }
 
   setTipScore(userId, matchId, score) {
@@ -83,7 +92,7 @@ class ScoreCalculator {
     });
   }
 
-  countScore(homeGoals, awayGoals, homeGoalsTip, awayGoalsTip) {
+  countScore(homeGoals, awayGoals, homeGoalsTip, awayGoalsTip, isDoubleScore) {
     let score = 0;
     if (homeGoals == null || awayGoals == null) {
       score = 0
@@ -96,7 +105,7 @@ class ScoreCalculator {
     } else {
       score = 0
     }
-    return score
+    return isDoubleScore ? score * 2 : score
   }
 }
 
