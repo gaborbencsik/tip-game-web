@@ -20,7 +20,8 @@ export const store = new Vuex.Store({
     showLogin: true,
     matches: [],
     tips: [],
-    teams: []
+    teams: [],
+    users: []
   },
   getters: {
   },
@@ -44,6 +45,10 @@ export const store = new Vuex.Store({
       state.user.lastSeen = user.lastSeen
       state.user.registration = user.registration
       state.user.favouriteTeam = user.favouriteTeam
+    },
+
+    setAllUsers: (state, users) => {
+      state.users = users
     },
 
     setTeamList: (state, teams) => {
@@ -116,6 +121,21 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(profile => {
         context.commit('setUser', profile.user)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+
+    getAllUsers (context, userId) {
+      fetch(`/users`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        context.commit('setAllUsers', data.users)
       }).catch(error => {
         console.log('error', error)
       })

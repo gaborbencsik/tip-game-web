@@ -115,6 +115,29 @@ class UserController {
       res.status(200).send({success: false, message: error});
     });
   }
+
+  getAllUsers(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    User.find({}).then(users => {
+      let userList = users.map(user => {
+        return {
+          name: user.name,
+          id: user._id,
+          score: user.score,
+          lastSeen: user.last_seen,
+          favouriteTeam: user.favourite_team
+        }
+      })
+      res.status(200).send({success: true, users: userList})
+    }).catch(error => {
+      console.log(error);
+      res.status(200).send({success: false, message: error});
+    });
+  }
 }
 
 module.exports = UserController
