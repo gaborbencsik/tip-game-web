@@ -3,7 +3,7 @@
     <div v-if="user.authenticated">
       <navbar></navbar>
     </div>
-    <div v-else class="auth container-fluid">
+    <div v-else class="auth container">
       <div class="col-md-6 col-xs-8 col-xs-offset-2">
       <div v-if="showLoginState">
         <login></login>
@@ -13,7 +13,7 @@
       </div>
       </div>
     </div>
-    <router-view class="container-fluid"></router-view>
+    <router-view class="container"></router-view>
   </div>
 </template>
 
