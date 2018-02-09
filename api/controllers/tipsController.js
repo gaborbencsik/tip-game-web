@@ -11,6 +11,11 @@ class TipsController {
       return
     }
 
+    if (!Validator.isValidTipInput(req.body.homeGoals, req.body.awayGoals)) {
+      res.status(200).send({success: false, message: 'The submitted tip is not a number.'});
+      return
+    }
+
     if (req.body.homeGoals < 0 || req.body.awayGoals < 0) {
       res.send({success: false, message: 'Goals can not be negative numbers'})
       return
