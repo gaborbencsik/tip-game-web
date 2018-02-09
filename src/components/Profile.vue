@@ -129,10 +129,6 @@ h2 {
   margin-left: 1rem;
 }
 
-input {
-  width: 6rem;
-}
-
 select {
   width: 70%;
   font-size: .9rem;

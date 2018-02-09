@@ -38,6 +38,7 @@
     "cryptr": "^2.0.0",
     "css-loader": "0.28.0",
     "cssnano": "3.10.0",
+    "email-validator": "^1.1.1",
     "eslint": "3.19.0",
     "eslint-config-standard": "6.2.1",
     "eslint-friendly-formatter": "3.0.0",
@@ -65,7 +66,6 @@
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "2.0.2",
     "lodash": "^4.17.4",
-    "lowdb": "1.0.0",
     "mocha": "3.2.0",
     "moment": "^2.19.4",
     "mongoose": "4.13.4",
@@ -73,6 +73,7 @@
     "opn": "5.1.0",
     "optimize-css-assets-webpack-plugin": "2.0.0",
     "ora": "1.2.0",
+    "password-validator": "^4.0.0",
     "phantomjs-prebuilt": "2.1.14",
     "semver": "5.3.0",
     "shelljs": "0.7.6",
@@ -93,8 +94,7 @@
     "webpack-bundle-analyzer": "2.2.1",
     "webpack-dev-middleware": "1.10.0",
     "webpack-hot-middleware": "2.18.0",
-    "webpack-merge": "4.1.0",
-    "wee-db": "0.0.1"
+    "webpack-merge": "4.1.0"
   },
   "devDependencies": {
     "nodemon": "1.12.1",

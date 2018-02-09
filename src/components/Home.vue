@@ -8,7 +8,7 @@
     <main>
       <b-container fluid>
         <b-row class="list-head">
-          <b-col cols="1" md="1"></b-col>
+          <b-col cols="1" md="1">#</b-col>
           <b-col cols="2" md="2">User</b-col>
           <b-col cols="1" md="1">Score</b-col>
         </b-row>

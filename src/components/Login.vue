@@ -73,6 +73,7 @@ export default {
     authenticateUser: function (token, name) {
       let user = {token: token, authenticated: true, name: name}
       this.$store.commit('authenticateUser', user)
+      this.$store.dispatch('getAllUsers')
     }
   }
 }
