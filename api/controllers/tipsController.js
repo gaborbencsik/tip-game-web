@@ -17,7 +17,7 @@ class TipsController {
     }
 
     if (req.body.homeGoals < 0 || req.body.awayGoals < 0) {
-      res.send({success: false, message: 'Goals can not be negative numbers'})
+      res.status(200).send({success: false, message: 'Goals can not be negative numbers'})
       return
     }
 
@@ -29,7 +29,7 @@ class TipsController {
       let timeDifference = date - currentDate;
 
       if (timeDifference < 0) {
-        res.send({success: false, message: 'You can not submit this tip, because the event is already started.'});
+        res.status(200).send({success: false, message: 'You can not submit this tip, because the event is already started.'});
         return
       }
 
@@ -44,7 +44,7 @@ class TipsController {
       Tip.findOneAndUpdate({userId: req.params.userId, matchId: req.params.matchId}, tip, {upsert: true}
       ).then(function() {
         Tip.find({userId: req.params.userId, matchId: req.params.matchId}).then(tip => {
-          res.send(tip);
+          res.status(200).send(tip);
         })
       }).catch(function(error) {
         console.log('error',error);
@@ -86,7 +86,7 @@ class TipsController {
         }
       });
 
-      res.send(list);
+      res.status(200).send(list);
     }).catch(function(error) {
       console.log('error',error);
       res.send(error);

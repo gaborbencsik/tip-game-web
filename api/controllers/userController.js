@@ -29,7 +29,7 @@ class UserController {
   }
 
   register(req, res, next) {
-    
+
     let isValidRegistration = Validator.isValidRegistration({name: req.body.name, password: req.body.password, email: req.body.email})
 
     if (!isValidRegistration.success) {

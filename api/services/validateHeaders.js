@@ -1,7 +1,8 @@
-const User = require('../models/user.js');
-
 const jwt = require('jwt-simple');
 const secret = process.env.JWT_SECRET;
+const _ = require('lodash');
+
+const User = require('../models/user.js');
 
 const emailValidator = require('email-validator');
 const passwordValidator = require('password-validator');
@@ -34,7 +35,7 @@ class Validator {
   }
 
   static isValidTipInput(homeGoals, awayGoals) {
-    return Number.isInteger(homeGoals) && Number.isInteger(awayGoals)
+    return Number.isInteger(homeGoals) && Number.isInteger(awayGoals) && homeGoals >= 0 && awayGoals >= 0
   }
 
   static isValidRegistration(rawRegData) {
