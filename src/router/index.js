@@ -6,6 +6,7 @@ import Tips from '@/components/Tips'
 import Login from '@/components/Login'
 import Registration from '@/components/Registration'
 import Profile from '@/components/Profile'
+import Competition from '@/components/Competition'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ const router = new Router({
       path: '/tips',
       name: 'Tips',
       component: Tips
+    },
+    {
+      path: '/competition',
+      name: 'Competition',
+      component: Competition
     },
     {
       path: '/profile',

@@ -21,7 +21,8 @@ export const store = new Vuex.Store({
     matches: [],
     tips: [],
     teams: [],
-    users: []
+    users: [],
+    teamOrder: []
   },
   getters: {
   },

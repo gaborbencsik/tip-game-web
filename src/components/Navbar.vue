@@ -5,6 +5,7 @@
         <router-link class="btn" to="/home">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
         <router-link class="btn" to="/tips">Tips</router-link>
+        <router-link class="btn" to="/competition">Competition</router-link>
       </nav>
       <nav>
         <router-link class="btn" to="/profile">
