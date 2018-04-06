@@ -2,6 +2,7 @@ const Match = require('../models/match.js');
 const Validator = require('../services/validateHeaders.js');
 const Tip = require('../models/tip.js');
 const Team = require('../models/team.js');
+const CompetitionOrder = require('../models/competitionOrder.js');
 
 const _ = require('lodash');
 
@@ -77,6 +78,28 @@ class MatchList {
     }).catch(error => {
       console.log('error', error);
       res.send({success: false, message: error});
+    });
+  }
+
+  saveOrder(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    console.log(req.body);
+
+    CompetitionOrder.findOneAndUpdate(
+      { userId: req.params.userId,  competition: "Bundesliga"},
+      { order: req.body.order },
+      { upsert: true }
+    ).then(order => {
+        CompetitionOrder.findOne({userId: req.params.userId, competition: "Bundesliga"}).then(order => {
+          res.status(200).send({success: true, order: order});
+        })
+    }).catch(error => {
+      console.log('error', error);
+      res.status(200).send({success: false, message: error});
     });
   }
 }
