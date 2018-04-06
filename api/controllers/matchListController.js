@@ -87,8 +87,6 @@ class MatchList {
       return
     }
 
-    console.log(req.body);
-
     CompetitionOrder.findOneAndUpdate(
       { userId: req.params.userId,  competition: "Bundesliga"},
       { order: req.body.order },

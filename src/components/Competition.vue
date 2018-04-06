@@ -1,14 +1,14 @@
 <template class="container-fluid">
   <div v-if="authenticated" class="competition">
     <b-alert class="fixed"
-             variant="danger"
-             dismissible
-             :show="error"
-             @dismissed="error=false">
+        variant="danger"
+        dismissible
+        :show="error"
+        @dismissed="error=false">
       <p>{{ error }}</p>
     </b-alert>
     <main>
-      <button class="btn btn-primary" type="button" name="button" @click="logOrder">Save order</button>
+      <button class="btn btn-primary" type="button" name="button" @click="saveTeamOrder">Save order</button>
 
       <div class="wrapper">
         <b-col cols="4" v-if="this.showTeams">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'competition',
@@ -77,11 +77,32 @@ export default {
     }
   },
   methods: {
-    log (e) {
-      console.log(e)
+    saveTeamOrder () {
+      let userId = localStorage.getItem('id')
+
+      let payload = {
+        order: this.order
+      }
+
+      axios.put(`/competition/user/${userId}/order`,
+        payload,
+        {headers: {'my-custom-header': this.$store.state.user.token}
+        }).then(response => {
+          this.manage(response.data)
+        }).catch(error => {
+          console.log('error', error)
+        })
     },
-    logOrder () {
-      console.log(this.order)
+    manage: function (data) {
+      if (!data.success) {
+        this.error = data.message
+      }
+      this.refreshState()
+    },
+    refreshState: function () {
+      console.log('called')
+      // let id = localStorage.getItem('id')
+      // this.$store.dispatch('getTips', id)
     },
     changeState () {
       this.showTeams = true
