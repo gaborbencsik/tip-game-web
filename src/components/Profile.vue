@@ -72,8 +72,8 @@ export default {
     getTeams () {
       return this.$store.state.teams.map(team => {
         return {
-          value: team.name,
-          text: team.name
+          value: team.team,
+          text: team.team
         }
       })
     }

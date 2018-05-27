@@ -66,15 +66,7 @@ class MatchList {
     }
 
     Team.find({}).then(teams => {
-      let teamList = teams.map(team => {
-        return {
-          id: team._id,
-          code: team.code,
-          name: team.name,
-          shortName: team.shortName
-        }
-      });
-      res.send({success: true, data: teamList})
+      res.send({success: true, data: teams})
     }).catch(error => {
       console.log('error', error);
       res.send({success: false, message: error});
