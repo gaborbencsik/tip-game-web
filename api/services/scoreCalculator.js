@@ -16,7 +16,7 @@ mongoose.connect(uri, {
   console.log(error);
 });
 
-const url = 'http://api.football-data.org/v1/competitions/452/fixtures';
+const url = 'http://api.football-data.org/v1/competitions/467/fixtures';
 
 class ScoreCalculator {
 

@@ -1,4 +1,4 @@
-FROM beevelop/nodejs-python:latest
+FROM node:latest
 
 RUN mkdir /app
 WORKDIR /app

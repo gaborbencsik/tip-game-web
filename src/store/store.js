@@ -22,7 +22,7 @@ export const store = new Vuex.Store({
     tips: [],
     teams: [],
     users: [],
-    teamOrder: []
+    order: []
   },
   getters: {
   },
@@ -56,6 +56,10 @@ export const store = new Vuex.Store({
       state.teams = teams
     },
 
+    setTeamOrder: (state, order) => {
+      state.order = order
+    },
+
     authenticateUser: (state, user) => {
       state.user.authenticated = user.authenticated
       state.user.token = user.token
@@ -66,20 +70,6 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    // getMatches (context) {
-    //   fetch('/competition/matches', {
-    //     method: 'GET',
-    //     headers: new Headers({
-    //       'my-custom-header': this.state.user.token
-    //     })
-    //   }).then(response => {
-    //     return response.json()
-    //   }).then(data => {
-    //     context.commit('setState', data.data)
-    //   }).catch(error => {
-    //     console.log('error', error)
-    //   })
-    // },
 
     getMatchesWithTips (context, userId) {
       fetch(`/user/${userId}/competition/matches`, {
@@ -155,6 +145,25 @@ export const store = new Vuex.Store({
       }).catch(error => {
         console.log('error', error)
       })
+    },
+
+    getTeamOrder (context, userId) {
+      fetch(`/competition/user/${userId}/order`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(teams => {
+        context.commit('setTeamOrder', teams.data.order)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+
+    setTeamOrder (context, order) {
+      context.commit('setTeamOrder', order)
     },
 
     getCurrentScore (context, userId) {

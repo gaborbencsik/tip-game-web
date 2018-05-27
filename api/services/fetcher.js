@@ -11,7 +11,8 @@ mongoose.connect(uri, {
 }).then(function(data) { console.log('connected to mongo' );
 }).catch(function(error) { console.log(error) });
 
-const competitionsUrl = 'http://api.football-data.org/v1/competitions/452/fixtures';
+// const competitionsUrl = 'http://api.football-data.org/v1/competitions/452/fixtures';
+const competitionsUrl = 'http://api.football-data.org/v1/competitions/467/fixtures';
 
 class MatchFetcher {
 
@@ -84,4 +85,5 @@ let ApiClient = {
 const manager = new MatchFetcher;
 ApiClient.fetchData(competitionsUrl)
   .then(matches => { manager.parseApi(matches) })
+  .then(() => { console.log('finished') })
   .catch(error => { console.log('error', error) });

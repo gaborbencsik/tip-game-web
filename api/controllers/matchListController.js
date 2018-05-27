@@ -81,6 +81,21 @@ class MatchList {
     });
   }
 
+  getTeamOrder(req, res) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    CompetitionOrder.findOne({userId: req.params.userId, competition: "Bundesliga"}).then(order => {
+      res.status(200).send({success: true, data: order});
+    }).catch(error => {
+      console.log('error', error);
+      res.status(200).send({success: false, message: error});
+    });
+
+  }
+
   saveOrder(req, res) {
     if (!Validator.checkCustomHeaders(req.headers)) {
       res.status(401).send({success: false, message: 'Not authorized.'});

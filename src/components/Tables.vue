@@ -1,5 +1,5 @@
 <template class="container-fluid">
-  <div v-if="authenticated" class="competition">
+  <div v-if="authenticated" class="tables">
     <b-alert class="fixed"
         variant="danger"
         dismissible
@@ -8,58 +8,8 @@
       <p>{{ error }}</p>
     </b-alert>
     <main>
+      <h1>Tables</h1>
 
-      {{ teamOrder }}
-      <button class="btn btn-primary" type="button" name="button" @click="saveTeamOrder">Save order</button>
-
-      <div class="wrapper">
-        <!-- <b-col cols="4" v-if="this.showTeams">
-          <b-container fluid>
-            <b-row class="team" v-for="( team, index ) in order" :key="team">
-              <div class="team-ranking">
-                <span>{{ index + 1 }}</span>
-              </div>
-              <div class="btn team-name"
-                  draggable="true"
-                  v-on:dragstart="dragstartHandler"
-                  :data-matchid="team"
-                  droppable="true" v-on:drop="dropHandler" v-on:dragover="dragoverHandler">
-                <span :data-matchid="team">{{ team }}</span>
-              </div>
-            </b-row>
-          </b-container>
-        </b-col> -->
-        <b-col cols="4" v-if="true">
-          <b-container fluid>
-            <b-row class="team" v-for="( team, index ) in teamOrder" :key="team">
-              <div class="team-ranking">
-                <span>{{ index + 1 }}</span>
-              </div>
-              <div class="btn team-name"
-                  draggable="true"
-                  v-on:dragstart="dragstartHandler"
-                  :data-matchid="team"
-                  droppable="true" v-on:drop="dropHandler" v-on:dragover="dragoverHandler">
-                <span :data-matchid="team">{{ team }}</span>
-              </div>
-            </b-row>
-          </b-container>
-        </b-col>
-        <!-- Heki-Meki Start -->
-        <!-- <b-col cols="4" v-if="!this.showTeams" v-on:touchmove="changeState" @mouseover="changeState">
-          <b-container fluid>
-            <b-row class="team" v-for="( team, index ) in teamOrder" :key="team">
-              <div class="team-ranking">
-                <span>{{ index + 1 }}</span>
-              </div>
-              <div class="btn team-name">
-                <span :data-matchid="team">{{ team }}</span>
-              </div>
-            </b-row>
-          </b-container>
-        </b-col> -->
-        <!-- Heki-Meki End -->
-      </div>
     </main>
   </div>
 </template>
@@ -68,7 +18,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'competition',
+  name: 'tables',
   components: {
   },
   data () {

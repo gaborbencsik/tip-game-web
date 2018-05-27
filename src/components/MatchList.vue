@@ -25,7 +25,7 @@
         </b-row>
         <div class="all-matches-header">
           <h2>All matches</h2>
-          <button class="btn btn-primary" @click="toggleMatches()">Show all matches</button>
+          <!-- <button class="btn btn-primary" @click="toggleMatches()">Show all matches</button> -->
         </div>
         <div v-show="allMatches">
           <b-row class="list-head">
@@ -59,7 +59,7 @@ export default {
   name: 'matchList',
   data () {
     return {
-      allMatches: false
+      allMatches: true
     }
   },
   methods: {

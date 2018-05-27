@@ -14,7 +14,8 @@ mongoose.connect(uri, {
   console.log(error);
 });
 
-const url = 'http://api.football-data.org/v1/competitions/452/teams';
+// const url = 'http://api.football-data.org/v1/competitions/452/teams';
+const url = 'http://api.football-data.org/v1/competitions/467/teams';
 
 class TeamFetcher {
 
@@ -32,17 +33,15 @@ class TeamFetcher {
         links: team._links
       }
 
-      Team.findOneAndUpdate({code: team.code}, teamData, {upsert: true}
+      Team.findOneAndUpdate({name: team.name}, teamData, {upsert: true}
       ).then(function() {
-        Team.find({code: team.code,}).then(team => {
+        Team.find({name: team.name,}).then(team => {
           console.log(team);
         })
       }).catch(function(error) {
         console.log('error',error);
       });
     });
-    console.log(JSON.stringify({message: 'Teams updated', timestamp: new Date, process_id: process.pid}));
-    process.exit(0);
   }
 }
 
@@ -63,4 +62,5 @@ let ApiClient = {
 const fetcher = new TeamFetcher;
 ApiClient.fetchData(url)
   .then((data) => { fetcher.parseTeamList(data) })
+  .then(() => { console.log('finished') })
   .catch(error => { console.log(error); });

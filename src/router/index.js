@@ -7,6 +7,7 @@ import Login from '@/components/Login'
 import Registration from '@/components/Registration'
 import Profile from '@/components/Profile'
 import Competition from '@/components/Competition'
+import Tables from '@/components/Tables'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ const router = new Router({
       path: '/competition',
       name: 'Competition',
       component: Competition
+    },
+    {
+      path: '/tables',
+      name: 'Tables',
+      component: Tables
     },
     {
       path: '/profile',
