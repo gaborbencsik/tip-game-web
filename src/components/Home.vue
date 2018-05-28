@@ -6,19 +6,34 @@
       <h1>Ranking</h1>
     </header>
     <main>
-      <b-container fluid>
-        <b-row class="list-head">
-          <b-col cols="1" md="1">#</b-col>
-          <b-col cols="2" md="2">User</b-col>
-          <b-col cols="1" md="1">Score</b-col>
-        </b-row>
-        <b-row v-for="user, index in orderedUsers" :key="user.name" class="list-item">
-          <b-col cols="1" md="1">{{ index + 1}}</b-col>
-          <b-col cols="2" md="2">{{user.name}}</b-col>
-          <b-col cols="1" md="1">{{user.score}}</b-col>
-        </b-row>
+      <b-container fluid class="wrapper">
+        <b-col cols="6" md="6">
+          <b-row class="list-head">
+            <b-col cols="1" md="1">#</b-col>
+            <b-col cols="3" md="3">User</b-col>
+            <b-col cols="1" md="1">Score</b-col>
+          </b-row>
+          <b-row v-for="user, index in orderedUsers" :key="user.name" class="list-item">
+            <b-col cols="1" md="1">{{ index + 1}}</b-col>
+            <b-col cols="3" md="3">{{user.name}}</b-col>
+            <b-col cols="1" md="1">{{user.score}}</b-col>
+          </b-row>
+        </b-col>
+        <b-col cols="6" md="6">
+          <b-row v-if="english" class="rules">
+            <h2>Rules</h2>
+            <div class="rule-list">
+              <b-row v-for="rule in this.rules" :key="rule">
+                <b-col cols="4" md="4" class="rule-list-item">{{rule.score}}</b-col>
+                <b-col cols="8" md="8">{{rule.content}}</b-col>
+              </b-row>
+            </div>
+          </b-row>
+          <b-row v-else class="rules">
+            <h2>Szabályok</h2>
+          </b-row>
+        </b-col>
       </b-container>
-
     </main>
   </div>
 </template>
@@ -30,6 +45,12 @@ export default {
   name: 'home',
   data () {
     return {
+      english: true,
+      rules: [
+        {score: '1', content: 'Three-way tip (1,2,X)'},
+        {score: '3', content: 'Accurate result (e.g. 2-1, 1-2, 1-1)'},
+        {score: 'double score', content: 'Successful favourite team tip'}
+      ]
     }
   },
   computed: {
@@ -87,4 +108,20 @@ a {
   padding-top: 10px;
   margin-top: 10px;
 }
+
+.wrapper {
+  display: flex;
+}
+
+.rules,
+.rule-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.rule-list-item {
+  text-align: center;
+  font-weight: bold;
+}
+
 </style>
