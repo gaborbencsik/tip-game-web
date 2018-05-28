@@ -7,6 +7,12 @@
              @dismissed="error=false">
       <p>{{ error }}</p>
     </b-alert>
+    <b-alert variant="success"
+             dismissible
+             @dismissed="success=false"
+             :show="success">
+      <p>Favourite team set successfully</p>
+    </b-alert>
     <header>
       <img v-bind:src="getAvatarUrl" v-bind:title="username">
       <h2>{{ username | capitalize }}</h2>
@@ -46,7 +52,8 @@ export default {
     return {
       selectedTeam: null,
       options: [],
-      error: false
+      error: false,
+      success: false
     }
   },
   computed: {
@@ -96,6 +103,9 @@ export default {
     manage: function (data) {
       if (!data.success) {
         this.error = data.message
+        this.success = false
+      } else {
+        this.success = true
       }
       // this.refreshState()
     }

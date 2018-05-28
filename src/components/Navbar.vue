@@ -5,8 +5,8 @@
         <router-link class="btn" to="/home">Home</router-link>
         <router-link class="btn" to="/match-list">Match List</router-link>
         <router-link class="btn" to="/tips">Tips</router-link>
-        <router-link class="btn" to="/competition">Competition</router-link>
-        <router-link class="btn" to="/tables">Tables</router-link>
+        <!-- <router-link class="btn" to="/competition">Competition</router-link> -->
+        <!-- <router-link class="btn" to="/groups">Groups</router-link> -->
       </nav>
       <nav>
         <router-link class="btn" to="/profile">
@@ -66,7 +66,6 @@ nav {
   nav {
     flex-direction: column;
   }
-
 }
 
 </style>

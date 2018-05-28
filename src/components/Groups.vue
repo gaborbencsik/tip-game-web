@@ -1,5 +1,5 @@
 <template class="container-fluid">
-  <div v-if="authenticated" class="tables">
+  <div v-if="authenticated" class="groups">
     <b-alert class="fixed"
         variant="danger"
         dismissible
@@ -8,24 +8,25 @@
       <p>{{ error }}</p>
     </b-alert>
     <main>
-      <h1>Tables</h1>
+      <h1>groups</h1>
+
+      {{ groups["A"] }}
 
     </main>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import _ from 'lodash'
 
 export default {
-  name: 'tables',
+  name: 'groups',
   components: {
   },
   data () {
     return {
-      error: false,
-      order: [],
-      showTeams: false
+      error: false
     }
   },
   computed: {
@@ -39,75 +40,21 @@ export default {
       return this.$store.state.user
     },
     teams () {
+      console.log(this.$store.state.teams)
       return this.$store.state.teams
     },
-    orderTeams () {
-      return this.$store.state.teams.map(team => team.shortName)
-    },
-    teamOrder () {
-      return this.$store.state.order
+    groups () {
+      let mapped = _.keyBy(this.teams, 'group')
+      console.log(mapped)
+      console.log(mapped['A'])
+      return _.keyBy(this.teams, 'group')
     }
-
   },
   methods: {
-    saveTeamOrder () {
-      let userId = localStorage.getItem('id')
-
-      let payload = {
-        order: this.teamOrder
-      }
-
-      axios.put(`/competition/user/${userId}/order`,
-        payload,
-        {headers: {'my-custom-header': this.$store.state.user.token}
-        }).then(response => {
-          this.manage(response.data)
-        }).catch(error => {
-          console.log('error', error)
-        })
-    },
-    manage: function (data) {
-      if (!data.success) {
-        this.error = data.message
-      }
-      this.refreshState()
-    },
-    refreshState: function () {
-      let id = localStorage.getItem('id')
-      this.$store.dispatch('getTeamOrder', id)
-    },
-    changeState () {
-      this.showTeams = true
-      this.mapTeams()
-      console.log(this.showTeams)
-    },
     mapTeams () {
       this.orderTeams.map(team => {
         this.order.push(team)
       })
-    },
-    dragstartHandler (ev) {
-      ev.dataTransfer.setData('text/plain', ev.target.dataset.matchid)
-    },
-    dragoverHandler (ev) {
-      ev.preventDefault()
-      ev.dataTransfer.dropEffect = 'move'
-    },
-    dropHandler (ev) {
-      ev.preventDefault()
-      let draggedTeam = ev.dataTransfer.getData('text')
-      let droppedTeam = ev.target.dataset.matchid
-
-      this.addToOrder(draggedTeam, droppedTeam, this.teamOrder)
-    },
-    addToOrder (draggedTeam, droppedTeam, order) {
-      console.log(order)
-      let indexOfDragged = order.indexOf(draggedTeam)
-      let indexOfDropped = order.indexOf(droppedTeam)
-
-      order.splice(indexOfDragged, 1)
-      order.splice(indexOfDropped, 0, draggedTeam)
-      this.$store.dispatch('setTeamOrder', order)
     }
   },
   filters: {
@@ -117,8 +64,8 @@ export default {
   },
   created: function () {
     let id = localStorage.getItem('id')
+    console.log(id)
     this.$store.dispatch('getTeams')
-    this.$store.dispatch('getTeamOrder', id)
   }
 }
 </script>

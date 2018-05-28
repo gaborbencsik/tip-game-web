@@ -85,7 +85,6 @@ class MatchList {
       console.log('error', error);
       res.status(200).send({success: false, message: error});
     });
-
   }
 
   saveOrder(req, res) {

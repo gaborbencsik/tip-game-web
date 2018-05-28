@@ -7,7 +7,7 @@ import Login from '@/components/Login'
 import Registration from '@/components/Registration'
 import Profile from '@/components/Profile'
 import Competition from '@/components/Competition'
-import Tables from '@/components/Tables'
+import Groups from '@/components/Groups'
 
 Vue.use(Router)
 
@@ -50,9 +50,9 @@ const router = new Router({
       component: Competition
     },
     {
-      path: '/tables',
-      name: 'Tables',
-      component: Tables
+      path: '/groups',
+      name: 'Groups',
+      component: Groups
     },
     {
       path: '/profile',
