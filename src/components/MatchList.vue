@@ -79,9 +79,9 @@ export default {
     },
     lastMatches () {
       const TWO_DAYS_IN_MILISECONDS = 172800 * 1000
-      const WEEK_IN_MILISECONDS = 604800 * 1000
+      const THREE_DAYS_IN_MILISECONDS = 259200 * 1000
       let now = Date.now() - TWO_DAYS_IN_MILISECONDS
-      let weekFromNow = Date.now() + WEEK_IN_MILISECONDS
+      let weekFromNow = Date.now() + THREE_DAYS_IN_MILISECONDS
       let newList = []
 
       _.mapKeys(this.orderedMatches, function (value, key) {

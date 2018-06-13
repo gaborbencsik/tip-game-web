@@ -8,6 +8,7 @@ import Registration from '@/components/Registration'
 import Profile from '@/components/Profile'
 import Competition from '@/components/Competition'
 import Groups from '@/components/Groups'
+import PlayerTips from '@/components/PlayerTips'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ const router = new Router({
       path: '/groups',
       name: 'Groups',
       component: Groups
+    },
+    {
+      path: '/player-tips',
+      name: 'PlayerTips',
+      component: PlayerTips
     },
     {
       path: '/profile',
