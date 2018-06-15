@@ -22,7 +22,8 @@ export const store = new Vuex.Store({
     tips: [],
     teams: [],
     users: [],
-    order: []
+    order: [],
+    groups: []
   },
   getters: {
   },
@@ -54,6 +55,10 @@ export const store = new Vuex.Store({
 
     setTeamList: (state, teams) => {
       state.teams = teams
+    },
+
+    setGroups: (state, groups) => {
+      state.groups = groups
     },
 
     setTeamOrder: (state, order) => {
@@ -142,6 +147,21 @@ export const store = new Vuex.Store({
         return response.json()
       }).then(teams => {
         context.commit('setTeamList', teams.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
+    },
+
+    getGroups (context) {
+      fetch(`/competition/groups`, {
+        method: 'GET',
+        headers: new Headers({
+          'my-custom-header': this.state.user.token
+        })
+      }).then(response => {
+        return response.json()
+      }).then(groups => {
+        context.commit('setGroups', groups.data)
       }).catch(error => {
         console.log('error', error)
       })

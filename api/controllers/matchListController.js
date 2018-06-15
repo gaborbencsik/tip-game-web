@@ -3,6 +3,7 @@ const Validator = require('../services/validateHeaders.js');
 const Tip = require('../models/tip.js');
 const Team = require('../models/team.js');
 const CompetitionOrder = require('../models/competitionOrder.js');
+const fetch = require('node-fetch');
 
 const _ = require('lodash');
 
@@ -16,6 +17,26 @@ class MatchList {
 
     Match.find({}).then(function(matches) {
       res.status(200).send({success: true, data: matches});
+    })
+  }
+
+  getGroups(req, res, next) {
+    if (!Validator.checkCustomHeaders(req.headers)) {
+      res.status(401).send({success: false, message: 'Not authorized.'});
+      return
+    }
+
+    fetch('http://api.football-data.org/v1/competitions/467/leagueTable', {
+      method: 'GET',
+      headers: { 'X-Auth-Token': 'e61a9ca95d4540aeb951e2c2ba44359d' }
+    }).then(response => {
+      return response.json();
+    }).then(response => {
+      console.log(response);
+      res.status(200).send({success: true, data: response.standings});
+    }).catch(error => {
+      console.log(error);
+      return Promise.reject();
     })
   }
 

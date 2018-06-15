@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+// import _ from 'lodash'
 
 export default {
   name: 'groups',
@@ -52,7 +52,7 @@ export default {
       return this.$store.state.teams
     },
     groups () {
-      return _.groupBy(this.teams, 'group')
+      return this.$store.state.groups
     }
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
   created: function () {
     let id = localStorage.getItem('id')
     console.log(id)
-    this.$store.dispatch('getTeams')
+    this.$store.dispatch('getGroups')
   }
 }
 </script>
