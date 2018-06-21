@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
-const uri = process.env.MONGO_URL;
+// const uri = process.env.MONGO_URL;
+const uri = 'mongodb://localhost:27017/tip-game';
 
 const Match = require('../models/match.js');
 
