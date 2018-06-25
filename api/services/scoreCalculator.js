@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const uri = process.env.MONGO_URL;
-// const uri = 'mongodb://localhost:27017/tip-game';
 
 const User = require('../models/user.js');
 const Match = require('../models/match.js');
@@ -101,6 +100,9 @@ class ScoreCalculator {
       score = 3
     } else if (homeGoals > awayGoals && homeGoalsTip > awayGoalsTip ||
       homeGoals / awayGoals == 1 && homeGoalsTip / awayGoalsTip == 1 ||
+      homeGoals / awayGoals == 1 && homeGoalsTip == 0 && awayGoalsTip == 0 ||
+      homeGoals == 0 && awayGoals == 0 && homeGoalsTip / awayGoalsTip == 1 ||
+      homeGoals == 0 && awayGoals == 0 && homeGoalsTip == 0 && awayGoalsTip == 0 ||
       homeGoals < awayGoals && homeGoalsTip < awayGoalsTip) {
       score = 1
     } else {

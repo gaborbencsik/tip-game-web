@@ -31,5 +31,8 @@ update-scores:    ## SSH into container
 fetch:    ## SSH into container
 	docker-compose run app bash -c "node api/services/worldCupFetcher.js"
 
+clean-scores:    ## SSH into container
+	docker-compose run app bash -c "node api/services/scoreClearner.js"
+
 fetch-teams:    ## SSH into container
 	docker-compose run app bash -c "node api/services/fetchTeamsForCompetition.js"

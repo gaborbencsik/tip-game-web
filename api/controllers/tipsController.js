@@ -28,10 +28,10 @@ class TipsController {
       let currentDate = Date.now();
       let timeDifference = date - currentDate;
 
-      if (timeDifference < 0) {
-        res.status(200).send({success: false, message: 'You can not submit this tip, because the event is already started.'});
-        return
-      }
+      // if (timeDifference < 0) {
+      //   res.status(200).send({success: false, message: 'You can not submit this tip, because the event is already started.'});
+      //   return
+      // }
 
       let tip = {
         userId: req.params.userId,
@@ -72,7 +72,7 @@ class TipsController {
         let tipMatchId = tips[match.matchId];
         let currentDate = new Date(match.date).getTime();
 
-        if (currentDate > Date.now()) {
+        // if (currentDate > Date.now()) {
           list.push({
             matchId: match.matchId,
             homeTeamName: match.homeTeamName,
@@ -83,7 +83,7 @@ class TipsController {
             awayGoals: tipMatchId === undefined ? '' : tipMatchId.awayGoals,
             lastModified: tipMatchId === undefined ? '' : tipMatchId.lastModified
           });
-        }
+        // }
       });
 
       res.status(200).send(list);
