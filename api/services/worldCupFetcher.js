@@ -15,49 +15,35 @@ const worldCupData = 'http://api.football-data.org/v1/competitions/467/leagueTab
 
 class WorldCupFetcher {
 
-  parseApi(league) {
+  async parseApi(league) {
 
     let standings = league.standings
 
-    Object.entries(standings).forEach(([key, teamData]) => {
-      teamData.forEach(teamItem => {
-        // console.log(teamItem);
+    let counter = 0;
 
-        Team.findOneAndUpdate({team: teamItem.team}, teamItem, {upsert: true}
-        ).then(function() {
-          Team.find({team: teamItem.team,}).then(team => {
-            console.log(team);
-          })
-        }).then(()=> {
-          console.log(`${teamItem.team} is updated`);
-        }).catch(function(error) {
-          console.log('error',error);
-        });
+    Object.entries(standings).forEach( async ([key, teamData]) => {
+
+      teamData.forEach( async teamItem => {
+
+        // try {
+          counter++;
+          console.log('ITT');
+          console.log(counter);
+          let team = await Team.findOneAndUpdate({ team: teamItem.team }, teamItem, { upsert: true });
+          console.log('OTT');
+          console.log(team);
+          // let updated = await Team.find({team: teamItem.team,});
+          // console.log(updated);
+        // } catch (error) {
+        //   console.log('error',error);
+        // }
+
+        console.log('OTT');
       })
     });
 
-    // console.log(league.standings);
-
-    // this.fetchTeams(data.teams)
-    // this.fetchMatches(data.groups)
-
-    // let update = Match.findOne({matchId: id}).then(function(prevMatch) {
-    //   if (prevMatch == null) {
-    //     Match.create(matchItem).then(function(newMatch) {
-    //       console.log('new match item created: ',newMatch);
-    //     }).catch(function(error) {
-    //       console.log('match item creation was not successful: ',error);
-    //     });
-    //   } else {
-    //     Match.update({matchId:prevMatch.matchId}, matchItem).then(function(newItem) {
-    //       console.log('updated existing match item: ',newItem);
-    //     }).catch(function(error) {
-    //       console.log('updating match item was not successful: ',error);
-    //     });
-    //   }
-    // }).catch(function(error) {
-    //   console.log('error: ',error);
-    // });
+    console.log('VEGE');
+    process.exit(0);
   }
 
   fetchTeams(teams) {

@@ -19,14 +19,34 @@ mongoose.connect(uri, {
 class Cleaner {
   static async clean() {
     let tips = await Tip.find({});
+    let users = await User.find({})
 
-    tips.forEach((tip) => {
-      Tip.findOneAndUpdate({_id: tip._id}, {score: null}).then(tip => {
-        Tip.findOne({_id: tip._id}).then(updated => {
-          console.log(updated);
-        })
-      })
-    })
+    await Cleaner.cleanTipScores(tips);
+    await Cleaner.cleanUserTotalScore(users);
+
+    console.log(JSON.stringify({
+      message: 'Cleanup finished',
+      timestamp: new Date,
+      process_id: process.pid
+    }));
+    
+    process.exit(0);
+  }
+
+  static async cleanTipScores(tips) {
+    for (let tip of tips) {
+      await Tip.findOneAndUpdate({_id: tip._id}, {score: null})
+    }
+  }
+
+  static async cleanUserTotalScore(users) {
+    for (let user of users) {
+      await Cleaner.clearScore(user)
+    }
+  }
+
+  static async clearScore(user) {
+    await User.findOneAndUpdate({_id: user._id}, {score: 0})
   }
 }
 

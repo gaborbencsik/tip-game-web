@@ -16,54 +16,59 @@ const competitionsUrl = 'http://api.football-data.org/v1/competitions/467/fixtur
 
 class MatchFetcher {
 
-  parseApi(obj) {
-    let object = obj.fixtures;
+  async parseApi(obj) {
+    let matches = obj.fixtures;
 
-    object.forEach((item) => {
+    for (let match of matches) {
 
-      let id = item._links.self.href.slice(-6);
+      let id = match._links.self.href.slice(-6);
       let halfTimeHomeGoals1 = null;
       let halfTimeAwayGoals1 = null;
 
-      if (item.result.halfTime != undefined) {
-        halfTimeHomeGoals1 = item.result.halfTime.goalsHomeTeam;
-        halfTimeAwayGoals1 = item.result.halfTime.goalsAwayTeam;
+      if (match.result.halfTime != undefined) {
+        halfTimeHomeGoals1 = match.result.halfTime.goalsHomeTeam;
+        halfTimeAwayGoals1 = match.result.halfTime.goalsAwayTeam;
       };
 
       let matchItem = {
         matchId: id,
-        homeTeamName: item.homeTeamName,
-        awayTeamName: item.awayTeamName,
-        date: new Date(item.date).getTime(),
-        matchday: item.matchday,
-        homeGoals: item.result.goalsHomeTeam,
-        awayGoals: item.result.goalsAwayTeam,
+        homeTeamName: match.homeTeamName,
+        awayTeamName: match.awayTeamName,
+        date: new Date(match.date).getTime(),
+        matchday: match.matchday,
+        homeGoals: match.result.goalsHomeTeam,
+        awayGoals: match.result.goalsAwayTeam,
         halfTimeHomeGoals: halfTimeHomeGoals1,
         halfTimeAwayGoals: halfTimeAwayGoals1,
-        status: item.status
+        status: match.status
       };
 
-      let update = Match.findOne({matchId: id}).then(function(prevMatch) {
-        if (prevMatch == null) {
-          Match.create(matchItem).then(function(newMatch) {
-            console.log('new match item created: ',newMatch);
-          }).catch(function(error) {
-            console.log('match item creation was not successful: ',error);
-          });
-        } else {
-          Match.update({matchId:prevMatch.matchId}, matchItem).then(function(newItem) {
-            console.log('updated existing match item: ',newItem);
-          }).catch(function(error) {
-            console.log('updating match item was not successful: ',error);
-          });
-        }
-      }).catch(function(error) {
-        console.log('error: ',error);
-      });
-    });
+      let matchItemFromDB = await Match.findOne({ matchId: id });
 
-    // console.log(JSON.stringify({message: 'Competition results updated', timestamp: new Date, process_id: process.pid}));
-    // process.exit(0);
+      if (matchItemFromDB == null) {
+        try {
+          let newMatchItem = await Match.create(matchItem);
+          console.log('new match item created: ',newMatchItem);
+        } catch (error) {
+          console.log('match item creation was not successful: ',error);
+        }
+      } else {
+        try {
+          let updatedMatchItem = await Match.update({ matchId: matchItem.matchId }, matchItem);
+          console.log('updated existing match item: ',updatedMatchItem);
+        } catch (error) {
+          console.log('updating match item was not successful: ',error);
+        }
+      }
+    }
+
+    console.log(JSON.stringify({
+      message: 'Match update finished',
+      timestamp: new Date,
+      process_id: process.pid
+    }));
+
+    process.exit(0);
 
   }
 }
@@ -85,5 +90,4 @@ let ApiClient = {
 const manager = new MatchFetcher;
 ApiClient.fetchData(competitionsUrl)
   .then(matches => { manager.parseApi(matches) })
-  .then(() => { console.log('finished') })
   .catch(error => { console.log('error', error) });

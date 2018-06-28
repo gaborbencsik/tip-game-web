@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-.PHONY: up-d up down restart build ssh update-db
+.PHONY: up-d up down restart build ssh update-db update-scores fetch clean-scores
 
 help: ##                 Show this help
 	@echo "Targets:"
@@ -22,17 +22,14 @@ build: ## Build with webpack
 ssh:    ## SSH into container
 	docker-compose run app bash
 
-update-db:    ## SSH into container
+update-db:    ## update matches
 	docker-compose run app bash -c "node api/services/fetcher.js"
 
-update-scores:    ## SSH into container
+update-scores:    ## update scores
 	docker-compose run app bash -c "node api/services/scoreCalculator.js"
 
-fetch:    ## SSH into container
+fetch:    ## fetch world cup team data
 	docker-compose run app bash -c "node api/services/worldCupFetcher.js"
 
-clean-scores:    ## SSH into container
+clean-scores:    ## clear scores
 	docker-compose run app bash -c "node api/services/scoreClearner.js"
-
-fetch-teams:    ## SSH into container
-	docker-compose run app bash -c "node api/services/fetchTeamsForCompetition.js"

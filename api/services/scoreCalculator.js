@@ -20,36 +20,69 @@ const url = 'http://api.football-data.org/v1/competitions/467/fixtures';
 
 class ScoreCalculator {
 
-  calculate() {
-    User.find({}).then(users => {
-      users.forEach(user => {
+  async calculate() {
+    let users = await User.find({});
+    let matchList = await Match.find({});
 
-        let matchList = Match.find({});
-        let tipList = Tip.find({userId: user._id});
+    await this.calculateScoreFor(users, matchList);
 
-        Promise.all([matchList, tipList]).then(values => {
-          let matches = values[0];
-          let tips = _.keyBy(values[1], 'matchId');
-          let totalScore = 0;
+    console.log(JSON.stringify({
+      message: 'Score calculation finished',
+      timestamp: new Date,
+      process_id: process.pid
+    }));
 
-          matches.forEach(match => {
-            let existingTip = tips[match.matchId];
+    process.exit(0);
+  }
 
-            if (existingTip === undefined) {
-              totalScore += 0
-            } else {
-              let isDoubleScore = this.isDoubleScore(match.homeTeamName, match.awayTeamName, user.favourite_team);
-              let score = this.countScore(match.homeGoals, match.awayGoals, existingTip.homeGoals, existingTip.awayGoals, isDoubleScore)
-              this.setTipScore(existingTip.userId, existingTip.matchId, score)
-              totalScore += score
-            }
-          });
-          this.setTotalScore(user._id, totalScore);
-        });
-      });
-    }).catch(error => {
-      console.log(error);
-    });
+  async calculateScoreFor(users, matches){
+    for (let user of users) {
+      let tipListOfUser = await Tip.find({userId: user._id});
+      let tips = _.keyBy(tipListOfUser, 'matchId');
+      let totalScore = 0;
+
+      for (let match of matches) {
+        let existingTip = tips[match.matchId];
+
+        if (existingTip === undefined) {
+          totalScore += 0
+        } else {
+          let isDoubleScore = this.isDoubleScore(match.homeTeamName, match.awayTeamName, user.favourite_team);
+          let score = this.countScore(match.homeGoals, match.awayGoals, existingTip.homeGoals, existingTip.awayGoals, isDoubleScore)
+          await this.setTipScore(existingTip.userId, existingTip.matchId, score)
+          totalScore += score
+        }
+      }
+
+      await this.setTotalScore(user._id, totalScore);
+    }
+  }
+
+  async setTipScore(userId, matchId, score) {
+
+    let match = await Match.findOne({matchId: matchId});
+
+    if (match.homeGoals != null || match.awayGoals != null) {
+      try {
+        let tip = await Tip.findOne({userId: userId, matchId: matchId});
+        await Tip.findOneAndUpdate({_id: tip._id}, {score: score}, {upsert: true})
+        console.log('tip score is updated', {matchId: tip.matchId, userId: tip.userId, score: tip.score});
+      } catch (error) {
+        console.log('error',error);
+      }
+    }
+  }
+
+  async setTotalScore(userId, score) {
+    let user = await User.find({_id: userId});
+
+    let oldScore = user[0].score;
+    if (oldScore <= score) {
+      let entry = await User.findOneAndUpdate({_id: userId}, { $set: { score: score }}, {upsert: true});
+      console.log({message: 'Score update was successful', name: entry.name, id: entry._id});
+    } else {
+      console.log({id: user[0]._id, name: user[0].name, error: 'The old score is higher then the new score', old: oldScore, new: score});
+    }
   }
 
   isDoubleScore(homeTeamName, awayTeamName, favouriteTeam) {
@@ -58,38 +91,6 @@ class ScoreCalculator {
     } else {
       return false
     }
-  }
-
-  setTipScore(userId, matchId, score) {
-
-    let match = Match.findOne({matchId: matchId}).then(match => {
-      if (match.homeGoals != null || match.awayGoals != null) {
-        Tip.findOne({userId: userId, matchId: matchId}).then(tip => {
-          Tip.findOneAndUpdate({userId: userId, matchId: matchId}, {score: score}, {upsert: true}
-          ).then(tip => {
-            console.log('tip score is updated', {matchId: tip.matchId, userId: tip.userId, score: tip.score});
-          }).catch(function(error) {
-            console.log('error',error);
-          });
-        })
-      }
-    });
-  }
-
-  setTotalScore(userId, score) {
-
-    User.find({_id: userId}).then(user => {
-      let oldScore = user[0].score;
-      if (oldScore <= score) {
-        User.findOneAndUpdate({_id: userId}, { $set: { score: score }}, {upsert: true}).then(user => {
-          console.log({message: 'Score update was successful', name: user.name, id: user._id});
-        }).catch(error => {
-          console.log(error);
-        });
-      } else {
-        console.log({id: user[0]._id, name: user[0].name, error: 'The old score is higher then the new score', old: oldScore, new: score});
-      }
-    });
   }
 
   countScore(homeGoals, awayGoals, homeGoalsTip, awayGoalsTip, isDoubleScore) {

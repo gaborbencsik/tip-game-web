@@ -34,6 +34,9 @@ const MatchSchema = new Schema({
   },
   halfTimeAwayGoals: {
     type: Number
+  },
+  status: {
+    type: String
   }
 });
 
